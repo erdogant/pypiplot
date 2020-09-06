@@ -1,0 +1,2 @@
+include pypi_downloads/data/*.zip
+include pypi_downloads/data/*.txt
