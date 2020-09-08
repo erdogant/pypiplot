@@ -123,6 +123,8 @@ class pypi_downloads:
             # ax.plot(df['weeknr'].values, df['downloads'].values, label=repo)
 
         out.fillna(value=0, inplace=True)
+        out.reset_index(drop=False, inplace=True)
+        out = out.groupby("date").sum()
         self.results = out
         # out.plot()
 
