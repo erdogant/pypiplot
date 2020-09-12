@@ -27,12 +27,13 @@ pp.stats(repo='pca')
 pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
 
 # %% Plot bnlearn
-pp.stats(repo='bnlearn')
-pp.plot()
+pp.stats(repo='benfordslaw')
+pp.plot(vmin=1)
 
 # %% Plot
+path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
 pp.stats()
-pp.plot(vmin=750)
+pp.plot(path=path, vmin=700)
 
 # %%
 from datetime import datetime, timedelta
