@@ -13,13 +13,13 @@ else:
 with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
-     install_requires=['wget','matplotlib','numpy','pandas','tqdm'],
+     install_requires=['matplotlib','numpy','pandas','pypistats','imagesc'],
      python_requires='>=3',
      name='pypi_downloads',
      version=new_version,
      author="Erdogan Taskesen",
      author_email="erdogant@gmail.com",
-     description="Python package pypi_downloads",
+     description="Python package to count and plot the number of downloads from Pypi.",
      long_description=long_description,
      long_description_content_type="text/markdown",
      url="https://github.com/erdogant/pypi_downloads",

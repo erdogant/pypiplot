@@ -11,7 +11,7 @@ pypi_downloads
 
 Description
 -----------
-pypi_downloads is for...
+Python package to count and plot the number of downloads from Pypi.
 
 Example
 -------

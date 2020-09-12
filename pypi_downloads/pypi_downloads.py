@@ -7,12 +7,16 @@
 # --------------------------------------------------
 
 import os
+from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
 import pypistats
 import requests
 import matplotlib.pyplot as plt
+import imagesc
 curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+
+# %%
 
 class pypi_downloads:
 
@@ -46,13 +50,17 @@ class pypi_downloads:
             if not np.any(np.isin(repos, repo)): raise ValueError('[pypi_downloads] >Error: repos [%s] does not exists or is private.' %(repo))
             repos = [repo]
 
-        if self.verbose>=3: print('[pypi_downloads] >Start downloading..')
+        if self.verbose>=3: print('[pypi_downloads] >Start updating..')
         for repo in repos:
             try:
                 if self.verbose>=3: print('[pypi_downloads] >[%s]' %(repo))
+                status = True
                 df = pypistats.overall(repo, total=True, format="pandas")
                 df.dropna(inplace=True)
                 df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+                df = df.sort_values("date")
+                df.reset_index(drop=True, inplace=True)
+                del df['percent']
 
                 # Merge with any on disk
                 pathname = os.path.join(curpath, repo + '.csv')
@@ -65,7 +73,7 @@ class pypi_downloads:
                 if status:
                     df.to_csv(pathname, index=False, sep=self.sep)
             except:
-                if self.verbose>=1: print('[pypi_downloads] >Skip [%s] coz not exists on pypi.' %(repo))
+                if self.verbose>=1: print('[pypi_downloads] >Skip [%s] coz not exists on Pypi.' %(repo))
 
     def get_repos(self):
         status = True
@@ -84,13 +92,12 @@ class pypi_downloads:
         return status, repos, filenames, pathnames
 
     def stats(self, repo=None):
-        # curpath = 'D://PY//REPOSITORIES//pypi_downloads//pypi_downloads//data//'
         status, repos, filenames, pathnames = self.get_repos()
 
         # Check whether specific repo exists.
         if repo is not None:
             Iloc = np.isin(repos, repo)
-            if not np.any(Iloc): raise ValueError('[pypi_downloads] >Error: repos [%s] does not exists or is private.' %(repo))
+            if not np.any(Iloc): raise ValueError('[pypi_downloads] >Error: repos [%s] does not exists or is private. Tip: Run the .update() first.' %(repo))
             # repos = [repo]
             repos = repos[Iloc]
             filenames = filenames[Iloc]
@@ -100,7 +107,6 @@ class pypi_downloads:
             if self.verbose>=3: print('[pypi_downloads] >No repos could be retrieved from git nor disk <return>')
             return None
 
-        # fig, ax = plt.subplots(figsize=(10, 2))
         out = pd.DataFrame()
         for repo, pathname in zip(repos, pathnames):
             df = read_repo_counts_from_disk(pathname, self.sep)
@@ -114,19 +120,23 @@ class pypi_downloads:
             df.reset_index(drop=False, inplace=True)
 
             dftmp = df.groupby("date").sum()
-            dftmp.rename(columns = {'downloads' : repo}, inplace=True)
+            dftmp.rename(columns = {'downloads': repo}, inplace=True)
             out = pd.concat([out, dftmp], axis=0)
-
-            # df['weeknr'] = df['date'].dt.week
-            # df['cumsum'] = df['downloads'].cumsum()
-            # ax.plot(df['weeknr'].values, df['cumsum'].values, label=repo)
-            # ax.plot(df['weeknr'].values, df['downloads'].values, label=repo)
 
         out.fillna(value=0, inplace=True)
         out.reset_index(drop=False, inplace=True)
         out = out.groupby("date").sum()
         self.results = out
+        return self.results
+    
+    def plot_more(self):
+        # fig, ax = plt.subplots(figsize=(10, 2))
         # out.plot()
+
+        # df['weeknr'] = df['date'].dt.week
+        # df['cumsum'] = df['downloads'].cumsum()
+        # ax.plot(df['weeknr'].values, df['cumsum'].values, label=repo)
+        # ax.plot(df['weeknr'].values, df['downloads'].values, label=repo)
 
         # ax.legend()
         # ax.grid(True)
@@ -139,10 +149,60 @@ class pypi_downloads:
         # chart = df.plot(x="date", y="downloads", figsize=(10, 2))
         # chart.figure.show()
         # chart.figure.savefig("overall.png")  # alternatively
-        return self.results
-    
-    def plot():
         pass
+        
+    def plot(self, path='d3heatmap.html', vmin=25, vmax=None):
+        df = self.results.sum(axis=1).copy()
+        duration = 364 # This is the number of columns in the plot
+        nr_days = 7 # Number of rows
+        datetimeformat='%Y-%m-%d'
+
+        # Make sure the duration is tops 365 from now
+        extend_days = datetime.now() - timedelta(duration)
+        dates_start = pd.to_datetime(pd.date_range(start=extend_days, end=df.index[0]).strftime(datetimeformat), format=datetimeformat)
+        df_start = pd.DataFrame(np.zeros((len(dates_start), 1)), dtype=int, index=dates_start)
+
+        # Fill the gap between now and the latest point of the date in the data
+        dates_end = pd.to_datetime(pd.date_range(start=df.index[-1] + timedelta(1), end=datetime.now()).strftime(datetimeformat), format=datetimeformat)
+        df_end = pd.DataFrame(np.zeros((len(dates_end), 1)), dtype=int, index=dates_end)
+
+        # dataframe containing 365 days of data
+        df_365 = pd.concat([df_start, df, df_end], axis=0)
+
+        # To make sure we can break the dataframe into columns of 7 days, we need to extend a bit more.
+        extend_days = float(nr_days - np.mod(df_365.shape[0], nr_days))
+        start = df_365.index[0] - timedelta(extend_days)
+        dates_start = pd.to_datetime(pd.date_range(start=start, end=df_365.index[0] - timedelta(1)).strftime(datetimeformat), format=datetimeformat)
+        df_start = pd.DataFrame(np.zeros((len(dates_start), 1)), dtype=int, index=dates_start)
+
+        # Final
+        df_fin = pd.concat([df_start, df_365], axis=0)
+        df_values = df_fin.values.reshape((-1, nr_days))
+
+        # Final heatmap with labels
+        month_name = df_fin.index.month_name().values
+        month_name = np.array(list(map(lambda x: x[0:3], month_name))).astype('O')
+
+        colnames = month_name + '_' + df_fin.index.week.astype(str).values
+        colnames = colnames.reshape((-1, nr_days))[:, -1]
+        rownames = df_fin.index.day_name().values.reshape((-1, nr_days))[0, :]
+        # Flip matrix up down to make sure that sunday is on top
+        rownames=rownames[::-1]
+        df_values = np.flipud(df_values.T)
+        
+        # Output
+        df_heatmap = pd.DataFrame(columns=colnames, data=df_values, index=rownames)
+        
+        # if vmin is not None:
+        #     vmin = df_heatmap.values.flatten()
+        #     vmin = vmin[vmin>=10]
+        #     vmin = np.min(vmin)
+        
+        description = '%.0d Pypi downloads last year' %(df_heatmap.sum().sum())
+        title = ''
+        imagesc.d3(df_heatmap, fontsize=10, title=title, description=description, path=path, width=700, height=200, cmap='interpolateGreens', vmin=vmin, vmax=vmax, stroke='black')
+
+
 
 # %%
 def get_files_on_disk(verbose=3):
