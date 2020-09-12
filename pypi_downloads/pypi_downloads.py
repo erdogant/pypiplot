@@ -151,7 +151,7 @@ class pypi_downloads:
         # chart.figure.savefig("overall.png")  # alternatively
         pass
         
-    def plot(self, path='d3heatmap.html', vmin=25, vmax=None):
+    def plot(self, title=None, description=None, path='d3heatmap.html', vmin=25, vmax=None):
         df = self.results.sum(axis=1).copy()
         duration = 364 # This is the number of columns in the plot
         nr_days = 7 # Number of rows
@@ -197,9 +197,10 @@ class pypi_downloads:
         #     vmin = df_heatmap.values.flatten()
         #     vmin = vmin[vmin>=10]
         #     vmin = np.min(vmin)
-        
-        description = '%.0d Pypi downloads last year' %(df_heatmap.sum().sum())
-        title = ''
+        if description is None:
+            description = '%.0d Pypi downloads last year' %(df_heatmap.sum().sum())
+        if title is None:
+            title = ''
         imagesc.d3(df_heatmap, fontsize=10, title=title, description=description, path=path, width=700, height=200, cmap='interpolateGreens', vmin=vmin, vmax=vmax, stroke='black')
 
 
