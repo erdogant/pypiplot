@@ -27,24 +27,25 @@ class pypi_downloads:
         self.category = category
         self.verbose=verbose
 
-    def get_repo_names_from_git(self):
-        # Extract repos for user
-        if self.verbose>=3: print('[pypi_downloads] >Extracting repo names for [%s]..' %(self.username))
-        r = requests.get(self.repo_link)
-        data = r.json()
-
-        # Extract the repo names
-        repos = []
-        for rep in data:
-            # full_names.insert(0, rep['full_name'])
-            repos.insert(0, rep['name'])
-        if self.verbose>=3: print('[pypi_downloads] >[%.0d] repos found for [%s]' %(len(repos), self.username))
-        # Return
-        return np.array(repos)
-
     def update(self, repo=None):
+        """Update repo download file(s).
+
+        Description
+        -----------
+        Update the local stored file with daily downloads for the specified repos.
+
+        Parameters
+        ----------
+        repo : list of Strings, (Default: None)
+            None : Take all available pypi repos for the username.
+
+        Returns
+        -------
+        None.
+
+        """
         # Extract all repos
-        repos = self.get_repo_names_from_git()
+        repos = self._get_repo_names_from_git()
         # Check whether specific repo exists.
         if repo is not None:
             if not np.any(np.isin(repos, repo)): raise ValueError('[pypi_downloads] >Error: repos [%s] does not exists or is private.' %(repo))
@@ -75,24 +76,28 @@ class pypi_downloads:
             except:
                 if self.verbose>=1: print('[pypi_downloads] >Skip [%s] coz not exists on Pypi.' %(repo))
 
-    def get_repos(self):
-        status = True
-        # Retrieve all downloads from disk
-        repos, filenames, pathnames = get_files_on_disk(verbose=self.verbose)
-        # Update and retrieve if needed
-        if len(repos)==0:
-            if self.verbose>=3: print('[pypi_downloads] >No files found on disk. Lets update first!')
-            # Update all repos
-            self.update()
-            # Retrieve all downloads from disk
-            repos, filenames, pathnames = get_files_on_disk(verbose=0)
-            if len(repos)==0:
-                status = False
-        # Return
-        return status, repos, filenames, pathnames
-
     def stats(self, repo=None):
-        status, repos, filenames, pathnames = self.get_repos()
+        """Compute statistics for the specified repo(s).
+
+        Description
+        -----------
+        Compute and summarize statistics for the libraries.
+
+        Parameters
+        ----------
+        repo : list of Strings, (Default: None)
+            None : Take all available pypi repos for the username.
+
+        Returns
+        -------
+        dict.
+            * data : Download statistics for the repo(s).
+            * heatmap : DataFrame containing (summarized) data statistics.
+            * repos : Number of repos.
+            * n_libraries : Number of libraries processed.
+
+        """
+        status, repos, filenames, pathnames = self._get_repos()
 
         # Check whether specific repo exists.
         if repo is not None:
@@ -120,19 +125,87 @@ class pypi_downloads:
             df.reset_index(drop=False, inplace=True)
 
             dftmp = df.groupby("date").sum()
-            dftmp.rename(columns = {'downloads': repo}, inplace=True)
+            dftmp.rename(columns={'downloads' : repo}, inplace=True)
             out = pd.concat([out, dftmp], axis=0)
 
         out.fillna(value=0, inplace=True)
         out.reset_index(drop=False, inplace=True)
         out = out.groupby("date").sum()
-        
+
+        # Make heatmap
         heatmap = _compute_history_heatmap(out)
 
         self.results = {}
         self.results['data'] = out
         self.results['heatmap'] = heatmap
+        self.results['n_libraries'] = out.shape[1]
+        self.results['repos'] = repos
         return self.results
+
+    def _get_repo_names_from_git(self):
+        # Extract repos for user
+        if self.verbose>=3: print('[pypi_downloads] >Extracting repo names for [%s]..' %(self.username))
+        r = requests.get(self.repo_link)
+        data = r.json()
+
+        # Extract the repo names
+        repos = []
+        for rep in data:
+            # full_names.insert(0, rep['full_name'])
+            repos.insert(0, rep['name'])
+        if self.verbose>=3: print('[pypi_downloads] >[%.0d] repos found for [%s]' %(len(repos), self.username))
+        # Return
+        return np.array(repos)
+
+    def _get_repos(self):
+        status = True
+        # Retrieve all downloads from disk
+        repos, filenames, pathnames = get_files_on_disk(verbose=self.verbose)
+        # Update and retrieve if needed
+        if len(repos)==0:
+            if self.verbose>=3: print('[pypi_downloads] >No files found on disk. Lets update first!')
+            # Update all repos
+            self.update()
+            # Retrieve all downloads from disk
+            repos, filenames, pathnames = get_files_on_disk(verbose=0)
+            if len(repos)==0:
+                status = False
+        # Return
+        return status, repos, filenames, pathnames
+
+    def plot(self, title=None, description=None, path='d3heatmap.html', vmin=25, vmax=None):
+        """Plot heatmap.
+
+        Parameters
+        ----------
+        title : String, (Default: None)
+            Title of the heatmap.
+        description : String, (Default: None)
+            Description of the heatmap.
+        path : String, (Default: 'd3heatmap.html'.)
+            Full pathname or filename to store the file. If None is used, the system tempdir is used.
+        vmin : int, (Default: 25)
+            Minimum color: Used for colorscheme.
+            None: Take the minimum value in the matrix.
+        vmax : int, (Default: None)
+            Minimum color: Used for colorscheme.
+            None: Take the maximum value in the matrix.
+
+        Returns
+        -------
+        None.
+
+        """
+        if description is None:
+            if self.results['n_libraries']>1:
+                description = '%.0d Pypi downloads last year across %.0d libraries' %(self.results['heatmap'].sum().sum(), self.results['n_libraries'])
+            else:
+                description = '%.0d Pypi downloads last year for %s' %(self.results['heatmap'].sum().sum(), self.results['repos'][0])
+
+        if title is None:
+            title = ''
+        # Make heatmap with d3js.
+        imagesc.d3(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap='interpolateGreens', vmin=vmin, vmax=vmax, stroke='black')
 
     def plot_more(self):
         # fig, ax = plt.subplots(figsize=(10, 2))
@@ -156,20 +229,8 @@ class pypi_downloads:
         # chart.figure.savefig("overall.png")  # alternatively
         pass
 
-    def plot(self, title=None, description=None, path='d3heatmap.html', vmin=25, vmax=None):
-        # if vmin is not None:
-        #     vmin = df_heatmap.values.flatten()
-        #     vmin = vmin[vmin>=10]
-        #     vmin = np.min(vmin)
-        if description is None:
-            description = '%.0d Pypi downloads last year' %(self.results['heatmap'].sum().sum())
-        if title is None:
-            title = ''
-        imagesc.d3(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap='interpolateGreens', vmin=vmin, vmax=vmax, stroke='black')
-
-
 # %%
-def _compute_history_heatmap(df, duration=364, nr_days=7):
+def _compute_history_heatmap(df, duration=360, nr_days=7):
     df = df.sum(axis=1).copy()
      # This is the number of columns in the plot
      # Number of rows

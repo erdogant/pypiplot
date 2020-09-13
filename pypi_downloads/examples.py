@@ -27,12 +27,16 @@ pp.stats(repo='pca')
 pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
 
 # %% Plot bnlearn
-results = pp.stats(repo='benfordslaw')
-pp.plot(vmin=1)
+results = pp.stats(repo='bnlearn')
+pp.plot(vmin=10)
+
+# %%
+results = pp.stats()
+pp.plot(vmin=700)
 
 # %% Plot
-path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
 pp.stats()
+path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
 pp.plot(path=path, vmin=700)
 
 # %%
