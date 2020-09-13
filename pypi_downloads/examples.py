@@ -27,7 +27,7 @@ pp.stats(repo='pca')
 pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
 
 # %% Plot bnlearn
-pp.stats(repo='benfordslaw')
+results = pp.stats(repo='benfordslaw')
 pp.plot(vmin=1)
 
 # %% Plot

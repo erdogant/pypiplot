@@ -126,9 +126,14 @@ class pypi_downloads:
         out.fillna(value=0, inplace=True)
         out.reset_index(drop=False, inplace=True)
         out = out.groupby("date").sum()
-        self.results = out
+        
+        heatmap = _compute_history_heatmap(out)
+
+        self.results = {}
+        self.results['data'] = out
+        self.results['heatmap'] = heatmap
         return self.results
-    
+
     def plot_more(self):
         # fig, ax = plt.subplots(figsize=(10, 2))
         # out.plot()
@@ -150,60 +155,65 @@ class pypi_downloads:
         # chart.figure.show()
         # chart.figure.savefig("overall.png")  # alternatively
         pass
-        
+
     def plot(self, title=None, description=None, path='d3heatmap.html', vmin=25, vmax=None):
-        df = self.results.sum(axis=1).copy()
-        duration = 364 # This is the number of columns in the plot
-        nr_days = 7 # Number of rows
-        datetimeformat='%Y-%m-%d'
-
-        # Make sure the duration is tops 365 from now
-        extend_days = datetime.now() - timedelta(duration)
-        dates_start = pd.to_datetime(pd.date_range(start=extend_days, end=df.index[0]).strftime(datetimeformat), format=datetimeformat)
-        df_start = pd.DataFrame(np.zeros((len(dates_start), 1)), dtype=int, index=dates_start)
-
-        # Fill the gap between now and the latest point of the date in the data
-        dates_end = pd.to_datetime(pd.date_range(start=df.index[-1] + timedelta(1), end=datetime.now()).strftime(datetimeformat), format=datetimeformat)
-        df_end = pd.DataFrame(np.zeros((len(dates_end), 1)), dtype=int, index=dates_end)
-
-        # dataframe containing 365 days of data
-        df_365 = pd.concat([df_start, df, df_end], axis=0)
-
-        # To make sure we can break the dataframe into columns of 7 days, we need to extend a bit more.
-        extend_days = float(nr_days - np.mod(df_365.shape[0], nr_days))
-        start = df_365.index[0] - timedelta(extend_days)
-        dates_start = pd.to_datetime(pd.date_range(start=start, end=df_365.index[0] - timedelta(1)).strftime(datetimeformat), format=datetimeformat)
-        df_start = pd.DataFrame(np.zeros((len(dates_start), 1)), dtype=int, index=dates_start)
-
-        # Final
-        df_fin = pd.concat([df_start, df_365], axis=0)
-        df_values = df_fin.values.reshape((-1, nr_days))
-
-        # Final heatmap with labels
-        month_name = df_fin.index.month_name().values
-        month_name = np.array(list(map(lambda x: x[0:3], month_name))).astype('O')
-
-        colnames = month_name + '_' + df_fin.index.week.astype(str).values
-        colnames = colnames.reshape((-1, nr_days))[:, -1]
-        rownames = df_fin.index.day_name().values.reshape((-1, nr_days))[0, :]
-        # Flip matrix up down to make sure that sunday is on top
-        rownames=rownames[::-1]
-        df_values = np.flipud(df_values.T)
-        
-        # Output
-        df_heatmap = pd.DataFrame(columns=colnames, data=df_values, index=rownames)
-        
         # if vmin is not None:
         #     vmin = df_heatmap.values.flatten()
         #     vmin = vmin[vmin>=10]
         #     vmin = np.min(vmin)
         if description is None:
-            description = '%.0d Pypi downloads last year' %(df_heatmap.sum().sum())
+            description = '%.0d Pypi downloads last year' %(self.results['heatmap'].sum().sum())
         if title is None:
             title = ''
-        imagesc.d3(df_heatmap, fontsize=10, title=title, description=description, path=path, width=700, height=200, cmap='interpolateGreens', vmin=vmin, vmax=vmax, stroke='black')
+        imagesc.d3(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap='interpolateGreens', vmin=vmin, vmax=vmax, stroke='black')
 
 
+# %%
+def _compute_history_heatmap(df, duration=364, nr_days=7):
+    df = df.sum(axis=1).copy()
+     # This is the number of columns in the plot
+     # Number of rows
+    datetimeformat='%Y-%m-%d'
+
+    # Make sure the duration is tops 365 from now
+    extend_days = datetime.now() - timedelta(duration)
+    dates_start = pd.to_datetime(pd.date_range(start=extend_days, end=df.index[0]).strftime(datetimeformat), format=datetimeformat)
+    df_start = pd.DataFrame(np.zeros((len(dates_start), 1)), dtype=int, index=dates_start)
+
+    # Fill the gap between now and the latest point of the date in the data
+    dates_end = pd.to_datetime(pd.date_range(start=df.index[-1] + timedelta(1), end=datetime.now()).strftime(datetimeformat), format=datetimeformat)
+    df_end = pd.DataFrame(np.zeros((len(dates_end), 1)), dtype=int, index=dates_end)
+
+    # dataframe containing 365 days of data
+    df_365 = pd.concat([df_start, df, df_end], axis=0)
+
+    # To make sure we can break the dataframe into columns of 7 days, we need to extend a bit more.
+    extend_days = float(nr_days - np.mod(df_365.shape[0], nr_days))
+    start = df_365.index[0] - timedelta(extend_days)
+    dates_start = pd.to_datetime(pd.date_range(start=start, end=df_365.index[0] - timedelta(1)).strftime(datetimeformat), format=datetimeformat)
+    df_start = pd.DataFrame(np.zeros((len(dates_start), 1)), dtype=int, index=dates_start)
+
+    # Final
+    df_fin = pd.concat([df_start, df_365], axis=0)
+    df_values = df_fin.values.reshape((-1, nr_days))
+
+    # Final heatmap with labels
+    # month_name = df_fin.index.month_name().values
+    # month_name = np.array(list(map(lambda x: x[0:3], month_name))).astype('O')
+    # colnames = month_name + '_' + df_fin.index.week.astype(str).values
+
+    colnames = df_fin.index.week.astype(str).values
+    colnames = colnames.reshape((-1, nr_days))[:, -1]
+    rownames = df_fin.index.day_name().values.reshape((-1, nr_days))[0, :]
+    rownames = np.array(list(map(lambda x: x[0:3], rownames))).astype('O')
+    # Flip matrix up down to make sure that sunday is on top
+    rownames=rownames[::-1]
+    df_values = np.flipud(df_values.T)
+
+    # Output
+    df_heatmap = pd.DataFrame(columns=colnames, data=df_values, index=rownames)
+
+    return df_heatmap
 
 # %%
 def get_files_on_disk(verbose=3):
