@@ -57,7 +57,6 @@ G = pypiplot.plot(model)
 ```
 <p align="center">
   <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/fig1.png" width="600" />
-  
 </p>
 
 
