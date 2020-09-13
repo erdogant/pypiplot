@@ -132,7 +132,7 @@ class pypiplot:
         out = out.groupby("date").sum()
 
         # Make heatmap
-        heatmap = _compute_history_heatmap(out)
+        heatmap = _compute_history_heatmap(out, verbose=self.verbose)
 
         self.results = {}
         self.results['data'] = out
@@ -285,9 +285,11 @@ class pypiplot:
         pass
 
 # %%
-def _compute_history_heatmap(df, duration=360, nr_days=7):
+def _compute_history_heatmap(df, duration=360, nr_days=7, verbose=3):
     df = df.sum(axis=1).copy()
     datetimeformat='%Y-%m-%d'
+
+    if verbose>=3: print('[pypiplot] >Computing heatmap across the last %.0d days.' %(duration))
 
     # Make sure the duration is tops 365 from now
     extend_days = datetime.now() - timedelta(duration)
