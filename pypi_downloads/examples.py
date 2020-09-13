@@ -19,25 +19,44 @@ pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
 pp = pypi_downloads(username='erdogant')
 
 pp.stats(repo='distfit')
+pp.plot_year()
+pp.plot(vmin=25)
+
 pp.stats(repo='worldmap')
+pp.plot_year()
+
 pp.stats(repo='hnet')
+pp.plot_year()
+
 pp.stats(repo='ismember')
+pp.plot_year()
+
 pp.stats(repo='flameplot')
+pp.plot_year()
+
 pp.stats(repo='pca')
+pp.plot_year()
+
 pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
+pp.plot_year(vmin=100)
+pp.plot(vmin=25)
 
 # %% Plot bnlearn
 results = pp.stats(repo='bnlearn')
-pp.plot(vmin=10)
+pp.plot_year()
 
 # %%
 results = pp.stats()
-pp.plot(vmin=700)
+pp.plot_year(vmin=700)
+pp.plot(vmin=25)
 
 # %% Plot
 pp.stats()
 path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
-pp.plot(path=path, vmin=700)
+pp.plot_year(path=path, vmin=700)
+
+path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_repos.html'
+pp.plot(path=path, vmin=10)
 
 # %%
 

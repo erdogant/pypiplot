@@ -17,7 +17,6 @@ import imagesc
 curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 # %%
-
 class pypi_downloads:
 
     def __init__(self, username, category=['with_mirrors', 'without_mirrors'], sep=';', verbose=3):
@@ -173,8 +172,12 @@ class pypi_downloads:
         # Return
         return status, repos, filenames, pathnames
 
-    def plot(self, title=None, description=None, path='d3heatmap.html', vmin=25, vmax=None):
-        """Plot heatmap.
+    def plot_year(self, title=None, description=None, path='d3heatmap.html', vmin=10, vmax=None, cmap='interpolateGreens'):
+        """Plot heatmap across all repos.
+
+        Description
+        -----------
+        Plot heatmap of all the repos combined with weeks vs day-name
 
         Parameters
         ----------
@@ -190,6 +193,8 @@ class pypi_downloads:
         vmax : int, (Default: None)
             Minimum color: Used for colorscheme.
             None: Take the maximum value in the matrix.
+        cmap : String, (default: 'interpolateInferno').
+            The colormap scheme. This can be found at: https://github.com/d3/d3-scale-chromatic.
 
         Returns
         -------
@@ -205,9 +210,59 @@ class pypi_downloads:
         if title is None:
             title = ''
         # Make heatmap with d3js.
-        imagesc.d3(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap='interpolateGreens', vmin=vmin, vmax=vmax, stroke='black')
+        imagesc.d3(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black')
 
-    def plot_more(self):
+    def plot(self, title=None, description=None, path='d3_heatmap_repos.html', vmin=10, vmax=None, width=700, height=None, cmap='interpolateGreens'):
+        """Plot heatmap across all repos.
+
+        Description
+        -----------
+        Plot heatmap of all the repos combined with weeks vs day-name
+
+        Parameters
+        ----------
+        title : String, (Default: None)
+            Title of the heatmap.
+        description : String, (Default: None)
+            Description of the heatmap.
+        path : String, (Default: 'd3_heatmap_repos.html'.)
+            Full pathname or filename to store the file. If None is used, the system tempdir is used.
+        vmin : int, (Default: 25)
+            Minimum color: Used for colorscheme.
+            None: Take the minimum value in the matrix.
+        vmax : int, (Default: None)
+            Minimum color: Used for colorscheme.
+            None: Take the maximum value in the matrix.
+        cmap : String, (default: 'interpolateInferno').
+            The colormap scheme. This can be found at: https://github.com/d3/d3-scale-chromatic.
+        width : int, (default: 700).
+            Width of the window.
+        height : int, (default: None).
+            None: Determine based on number of repos.
+
+        Returns
+        -------
+        None.
+
+        """
+        heatmap = pd.DataFrame()
+        cols = self.results['data'].columns.values
+        for col in cols:
+            heatmap[col] = _compute_history_heatmap(pd.DataFrame(self.results['data'][col])).sum(axis=0)
+
+        if title is None:
+            title = ''
+        if description is None:
+            if self.results['n_libraries']>1:
+                description = '%.0d Pypi downloads last year across %.0d libraries' %(self.results['heatmap'].sum().sum(), self.results['n_libraries'])
+            else:
+                description = '%.0d Pypi downloads last year for %s' %(self.results['heatmap'].sum().sum(), self.results['repos'][0])
+        if height is None:
+            height = np.minimum(40 * heatmap.shape[1], 550)
+
+        # Make heatmap with d3js.
+        imagesc.d3(heatmap.T, fontsize=9, title=title, description=description, path=path, width=700, height=height, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black')
+
         # fig, ax = plt.subplots(figsize=(10, 2))
         # out.plot()
 
@@ -232,8 +287,6 @@ class pypi_downloads:
 # %%
 def _compute_history_heatmap(df, duration=360, nr_days=7):
     df = df.sum(axis=1).copy()
-     # This is the number of columns in the plot
-     # Number of rows
     datetimeformat='%Y-%m-%d'
 
     # Make sure the duration is tops 365 from now
@@ -258,15 +311,12 @@ def _compute_history_heatmap(df, duration=360, nr_days=7):
     df_fin = pd.concat([df_start, df_365], axis=0)
     df_values = df_fin.values.reshape((-1, nr_days))
 
-    # Final heatmap with labels
-    # month_name = df_fin.index.month_name().values
-    # month_name = np.array(list(map(lambda x: x[0:3], month_name))).astype('O')
-    # colnames = month_name + '_' + df_fin.index.week.astype(str).values
-
+    # Column names
     colnames = df_fin.index.week.astype(str).values
     colnames = colnames.reshape((-1, nr_days))[:, -1]
     rownames = df_fin.index.day_name().values.reshape((-1, nr_days))[0, :]
     rownames = np.array(list(map(lambda x: x[0:3], rownames))).astype('O')
+
     # Flip matrix up down to make sure that sunday is on top
     rownames=rownames[::-1]
     df_values = np.flipud(df_values.T)
