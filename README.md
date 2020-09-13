@@ -1,14 +1,14 @@
-# pypi_downloads
+# pypiplot
 
-[![Python](https://img.shields.io/pypi/pyversions/pypi_downloads)](https://img.shields.io/pypi/pyversions/pypi_downloads)
-[![PyPI Version](https://img.shields.io/pypi/v/pypi_downloads)](https://pypi.org/project/pypi_downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/erdogant/pypi_downloads/blob/master/LICENSE)
-[![Downloads](https://pepy.tech/badge/pypi_downloads/month)](https://pepy.tech/project/pypi_downloads/month)
+[![Python](https://img.shields.io/pypi/pyversions/pypiplot)](https://img.shields.io/pypi/pyversions/pypiplot)
+[![PyPI Version](https://img.shields.io/pypi/v/pypiplot)](https://pypi.org/project/pypiplot/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/erdogant/pypiplot/blob/master/LICENSE)
+[![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/month)
 [![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)
-[![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/pypi_downloads/)
+[![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/pypiplot/)
 
 
-* pypi_downloads is Python package
+* pypiplot is Python package
 
 ### Contents
 - [Installation](#-installation)
@@ -18,62 +18,62 @@
 - [License](#-copyright)
 
 ### Installation
-* Install pypi_downloads from PyPI (recommended). pypi_downloads is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
+* Install pypiplot from PyPI (recommended). pypiplot is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
 * A new environment can be created as following:
 
 ```bash
-conda create -n env_pypi_downloads python=3.7
-conda activate env_pypi_downloads
+conda create -n env_pypiplot python=3.7
+conda activate env_pypiplot
 ```
 
 ```bash
-pip install pypi_downloads            # normal install
-pip install --upgrade pypi_downloads # or update if needed
+pip install pypiplot            # normal install
+pip install --upgrade pypiplot # or update if needed
 ```
 
 * Alternatively, you can install from the GitHub source:
 ```bash
 # Directly install from github source
-pip install -e git://github.com/erdogant/pypi_downloads.git@0.1.0#egg=master
-pip install git+https://github.com/erdogant/pypi_downloads#egg=master
-pip install git+https://github.com/erdogant/pypi_downloads
+pip install -e git://github.com/erdogant/pypiplot.git@0.1.0#egg=master
+pip install git+https://github.com/erdogant/pypiplot#egg=master
+pip install git+https://github.com/erdogant/pypiplot
 
 # By cloning
-git clone https://github.com/erdogant/pypi_downloads.git
-cd pypi_downloads
+git clone https://github.com/erdogant/pypiplot.git
+cd pypiplot
 pip install -U .
 ```  
 
-#### Import pypi_downloads package
+#### Import pypiplot package
 ```python
-import pypi_downloads as pypi_downloads
+import pypiplot as pypiplot
 ```
 
 #### Example:
 ```python
-df = pd.read_csv('https://github.com/erdogant/hnet/blob/master/pypi_downloads/data/example_data.csv')
-model = pypi_downloads.fit(df)
-G = pypi_downloads.plot(model)
+df = pd.read_csv('https://github.com/erdogant/hnet/blob/master/pypiplot/data/example_data.csv')
+model = pypiplot.fit(df)
+G = pypiplot.plot(model)
 ```
 <p align="center">
-  <img src="https://github.com/erdogant/pypi_downloads/blob/master/docs/figs/fig1.png" width="600" />
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/fig1.png" width="600" />
   
 </p>
 
 
 #### Citation
-Please cite pypi_downloads in your publications if this is useful for your research. Here is an example BibTeX entry:
+Please cite pypiplot in your publications if this is useful for your research. Here is an example BibTeX entry:
 ```BibTeX
-@misc{erdogant2020pypi_downloads,
-  title={pypi_downloads},
+@misc{erdogant2020pypiplot,
+  title={pypiplot},
   author={Erdogan Taskesen},
   year={2020},
-  howpublished={\url{https://github.com/erdogant/pypi_downloads}},
+  howpublished={\url{https://github.com/erdogant/pypiplot}},
 }
 ```
 
 #### References
-* https://github.com/erdogant/pypi_downloads
+* https://github.com/erdogant/pypiplot
 
 ### Maintainer
 * Erdogan Taskesen, github: [erdogant](https://github.com/erdogant)

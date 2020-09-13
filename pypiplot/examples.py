@@ -1,12 +1,12 @@
 # %%
-# import pypi_downloads
-# print(pypi_downloads.__version__)
+# import pypiplot
+# print(pypiplot.__version__)
 
-from pypi_downloads import pypi_downloads
-print(dir(pypi_downloads))
+from pypiplot import pypiplot
+print(dir(pypiplot))
 
 # %%
-pp = pypi_downloads(username='erdogant')
+pp = pypiplot(username='erdogant')
 
 # %% Update all
 pp.update()
@@ -16,7 +16,7 @@ pp.update(repo='bnlearn')
 pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
 
 # %%
-pp = pypi_downloads(username='erdogant')
+pp = pypiplot(username='erdogant')
 
 pp.stats(repo='distfit')
 pp.plot_year()

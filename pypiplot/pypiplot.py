@@ -1,8 +1,8 @@
 # --------------------------------------------------
-# Name        : pypi_downloads.py
+# Name        : pypiplot.py
 # Author      : E.Taskesen
 # Contact     : erdogant@gmail.com
-# github      : https://github.com/erdogant/pypi_downloads
+# github      : https://github.com/erdogant/pypiplot
 # Licence     : See licences
 # --------------------------------------------------
 
@@ -17,7 +17,7 @@ import imagesc
 curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 # %%
-class pypi_downloads:
+class pypiplot:
 
     def __init__(self, username, category=['with_mirrors', 'without_mirrors'], sep=';', verbose=3):
         self.username = username
@@ -47,13 +47,13 @@ class pypi_downloads:
         repos = self._get_repo_names_from_git()
         # Check whether specific repo exists.
         if repo is not None:
-            if not np.any(np.isin(repos, repo)): raise ValueError('[pypi_downloads] >Error: repos [%s] does not exists or is private.' %(repo))
+            if not np.any(np.isin(repos, repo)): raise ValueError('[pypiplot] >Error: repos [%s] does not exists or is private.' %(repo))
             repos = [repo]
 
-        if self.verbose>=3: print('[pypi_downloads] >Start updating..')
+        if self.verbose>=3: print('[pypiplot] >Start updating..')
         for repo in repos:
             try:
-                if self.verbose>=3: print('[pypi_downloads] >[%s]' %(repo))
+                if self.verbose>=3: print('[pypiplot] >[%s]' %(repo))
                 status = True
                 df = pypistats.overall(repo, total=True, format="pandas")
                 df.dropna(inplace=True)
@@ -73,7 +73,7 @@ class pypi_downloads:
                 if status:
                     df.to_csv(pathname, index=False, sep=self.sep)
             except:
-                if self.verbose>=1: print('[pypi_downloads] >Skip [%s] coz not exists on Pypi.' %(repo))
+                if self.verbose>=1: print('[pypiplot] >Skip [%s] coz not exists on Pypi.' %(repo))
 
     def stats(self, repo=None):
         """Compute statistics for the specified repo(s).
@@ -101,14 +101,14 @@ class pypi_downloads:
         # Check whether specific repo exists.
         if repo is not None:
             Iloc = np.isin(repos, repo)
-            if not np.any(Iloc): raise ValueError('[pypi_downloads] >Error: repos [%s] does not exists or is private. Tip: Run the .update() first.' %(repo))
+            if not np.any(Iloc): raise ValueError('[pypiplot] >Error: repos [%s] does not exists or is private. Tip: Run the .update() first.' %(repo))
             # repos = [repo]
             repos = repos[Iloc]
             filenames = filenames[Iloc]
             pathnames = pathnames[Iloc]
 
         if not status:
-            if self.verbose>=3: print('[pypi_downloads] >No repos could be retrieved from git nor disk <return>')
+            if self.verbose>=3: print('[pypiplot] >No repos could be retrieved from git nor disk <return>')
             return None
 
         out = pd.DataFrame()
@@ -143,7 +143,7 @@ class pypi_downloads:
 
     def _get_repo_names_from_git(self):
         # Extract repos for user
-        if self.verbose>=3: print('[pypi_downloads] >Extracting repo names for [%s]..' %(self.username))
+        if self.verbose>=3: print('[pypiplot] >Extracting repo names for [%s]..' %(self.username))
         r = requests.get(self.repo_link)
         data = r.json()
 
@@ -152,7 +152,7 @@ class pypi_downloads:
         for rep in data:
             # full_names.insert(0, rep['full_name'])
             repos.insert(0, rep['name'])
-        if self.verbose>=3: print('[pypi_downloads] >[%.0d] repos found for [%s]' %(len(repos), self.username))
+        if self.verbose>=3: print('[pypiplot] >[%.0d] repos found for [%s]' %(len(repos), self.username))
         # Return
         return np.array(repos)
 
@@ -162,7 +162,7 @@ class pypi_downloads:
         repos, filenames, pathnames = get_files_on_disk(verbose=self.verbose)
         # Update and retrieve if needed
         if len(repos)==0:
-            if self.verbose>=3: print('[pypi_downloads] >No files found on disk. Lets update first!')
+            if self.verbose>=3: print('[pypiplot] >No files found on disk. Lets update first!')
             # Update all repos
             self.update()
             # Retrieve all downloads from disk
@@ -328,7 +328,7 @@ def _compute_history_heatmap(df, duration=360, nr_days=7):
 
 # %%
 def get_files_on_disk(verbose=3):
-    if verbose>=3: print('[pypi_downloads] >Retrieve files from disk..')
+    if verbose>=3: print('[pypiplot] >Retrieve files from disk..')
     filenames = np.array(os.listdir(curpath))
     filesplit = np.array(list(map(os.path.splitext, filenames)))
     repos = filesplit[:, 0]
@@ -356,13 +356,13 @@ def add_new_counts_to_repo(df, df_disk, repo, verbose=3):
     count_after = df.shape[0]
     if count_after>count_before:
         STATUS=True
-        if verbose>=3: print('[pypi_downloads] >[%s] updated.' %(repo))
+        if verbose>=3: print('[pypiplot] >[%s] updated.' %(repo))
 
     return df, STATUS
 
 # %% Main
 # if __name__ == "__main__":
-#     import pypi_downloads as pypi_downloads
-#     df = pypi_downloads.import_example()
-#     out = pypi_downloads.fit(df)
-#     fig,ax = pypi_downloads.plot(out)
+#     import pypiplot as pypiplot
+#     df = pypiplot.import_example()
+#     out = pypiplot.fit(df)
+#     fig,ax = pypiplot.plot(out)

@@ -1,2 +1,2 @@
-include pypi_downloads/data/*.zip
-include pypi_downloads/data/*.txt
+include pypiplot/data/*.zip
+include pypiplot/data/*.txt

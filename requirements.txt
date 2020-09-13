@@ -1,5 +1,5 @@
-#conda create -n env_pypi_downloads python=3.6
-#conda activate env_pypi_downloads
+#conda create -n env_pypiplot python=3.6
+#conda activate env_pypiplot
 #conda install spyder
 
 matplotlib 

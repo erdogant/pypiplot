@@ -2,7 +2,7 @@ import setuptools
 import re
 
 # versioning ------------
-VERSIONFILE="pypi_downloads/__init__.py"
+VERSIONFILE="pypiplot/__init__.py"
 getversion = re.search( r"^__version__ = ['\"]([^'\"]*)['\"]", open(VERSIONFILE, "rt").read(), re.M)
 if getversion:
     new_version = getversion.group(1)
@@ -15,15 +15,15 @@ with open("README.md", "r") as fh:
 setuptools.setup(
      install_requires=['matplotlib','numpy','pandas','pypistats','imagesc'],
      python_requires='>=3',
-     name='pypi_downloads',
+     name='pypiplot',
      version=new_version,
      author="Erdogan Taskesen",
      author_email="erdogant@gmail.com",
      description="Python package to count and plot the number of downloads from Pypi.",
      long_description=long_description,
      long_description_content_type="text/markdown",
-     url="https://github.com/erdogant/pypi_downloads",
-	 download_url = 'https://github.com/erdogant/pypi_downloads/archive/'+new_version+'.tar.gz',
+     url="https://github.com/erdogant/pypiplot",
+	 download_url = 'https://github.com/erdogant/pypiplot/archive/'+new_version+'.tar.gz',
      packages=setuptools.find_packages(), # Searches throughout all dirs for files to include
      include_package_data=True, # Must be true to include files depicted in MANIFEST.in
      classifiers=[
