@@ -13,7 +13,7 @@ pp.update()
 
 # %% Update single repo
 pp.update(repo='bnlearn')
-pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
+results = pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
 
 # %%
 pp = pypiplot(username='erdogant')
