@@ -13,6 +13,8 @@ pp.update()
 
 # %% Update single repo
 pp.update(repo='bnlearn')
+
+# %% Get some stats
 results = pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
 
 # %%

@@ -6,24 +6,24 @@
 # Licence     : See licences
 # --------------------------------------------------
 
-import os
-from datetime import datetime, timedelta
-import pandas as pd
-import numpy as np
+import imagesc
 import pypistats
 import requests
 import matplotlib.pyplot as plt
-import imagesc
-curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+from datetime import datetime, timedelta
+import argparse
+import pandas as pd
+import numpy as np
+import os
 
 # %%
 class pypiplot:
-
     def __init__(self, username, category=['with_mirrors', 'without_mirrors'], sep=';', verbose=3):
         self.username = username
         self.repo_link = 'https://api.github.com/users/' + username + '/repos'
         self.sep = sep
         self.category = category
+        self.curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
         self.verbose=verbose
 
     def update(self, repo=None):
@@ -63,7 +63,7 @@ class pypiplot:
                 del df['percent']
 
                 # Merge with any on disk
-                pathname = os.path.join(curpath, repo + '.csv')
+                pathname = os.path.join(self.curpath, repo + '.csv')
                 if os.path.isfile(pathname):
                     # Read repo from disk
                     df_disk = read_repo_counts_from_disk(pathname, self.sep)
@@ -71,6 +71,7 @@ class pypiplot:
                     df, status = add_new_counts_to_repo(df, df_disk, repo, verbose=self.verbose)
                 # Write to disk
                 if status:
+                    if self.verbose>=3: print('[pypiplot] >Write to disk..')
                     df.to_csv(pathname, index=False, sep=self.sep)
             except:
                 if self.verbose>=1: print('[pypiplot] >Skip [%s] coz not exists on Pypi.' %(repo))
@@ -159,20 +160,20 @@ class pypiplot:
     def _get_repos(self):
         status = True
         # Retrieve all downloads from disk
-        repos, filenames, pathnames = get_files_on_disk(verbose=self.verbose)
+        repos, filenames, pathnames = get_files_on_disk(self.curpath, verbose=self.verbose)
         # Update and retrieve if needed
         if len(repos)==0:
             if self.verbose>=3: print('[pypiplot] >No files found on disk. Lets update first!')
             # Update all repos
             self.update()
             # Retrieve all downloads from disk
-            repos, filenames, pathnames = get_files_on_disk(verbose=0)
+            repos, filenames, pathnames = get_files_on_disk(self.curpath, verbose=0)
             if len(repos)==0:
                 status = False
         # Return
         return status, repos, filenames, pathnames
 
-    def plot_year(self, title=None, description=None, path='d3heatmap.html', vmin=10, vmax=None, cmap='interpolateGreens'):
+    def plot_year(self, title=None, description=None, path='d3heatmap.html', vmin=10, vmax=None, cmap='interpolateGreens', visible=True):
         """Plot heatmap across all repos.
 
         Description
@@ -195,6 +196,8 @@ class pypiplot:
             None: Take the maximum value in the matrix.
         cmap : String, (default: 'interpolateInferno').
             The colormap scheme. This can be found at: https://github.com/d3/d3-scale-chromatic.
+        visible : Bool, (default: True).
+            Open the browser.
 
         Returns
         -------
@@ -210,7 +213,7 @@ class pypiplot:
         if title is None:
             title = ''
         # Make heatmap with d3js.
-        imagesc.d3(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black')
+        imagesc.d3(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black', showfig=visible)
 
     def plot(self, title=None, description=None, path='d3_heatmap_repos.html', vmin=10, vmax=None, width=700, height=None, cmap='interpolateGreens'):
         """Plot heatmap across all repos.
@@ -329,7 +332,7 @@ def _compute_history_heatmap(df, duration=360, nr_days=7, verbose=3):
     return df_heatmap
 
 # %%
-def get_files_on_disk(verbose=3):
+def get_files_on_disk(curpath, verbose=3):
     if verbose>=3: print('[pypiplot] >Retrieve files from disk..')
     filenames = np.array(os.listdir(curpath))
     filesplit = np.array(list(map(os.path.splitext, filenames)))
@@ -349,7 +352,7 @@ def read_repo_counts_from_disk(pathname, sep):
 
 def add_new_counts_to_repo(df, df_disk, repo, verbose=3):
     STATUS = False
-    count_before = df.shape[0]
+    count_before = df_disk.shape[0]
     df = pd.concat([df, df_disk], axis=0)
     df.drop_duplicates(inplace=True)
     df = df.sort_values("date")
@@ -362,9 +365,21 @@ def add_new_counts_to_repo(df, df_disk, repo, verbose=3):
 
     return df, STATUS
 
+
 # %% Main
-# if __name__ == "__main__":
-#     import pypiplot as pypiplot
-#     df = pypiplot.import_example()
-#     out = pypiplot.fit(df)
-#     fig,ax = pypiplot.plot(out)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    # parser.add_argument("github", type=str, help="github account name")
+    parser.add_argument("-u", "--username", type=str, help="username github.")
+    parser.add_argument("-l", "--library", type=str, help="library name(s).")
+    parser.add_argument("-p", "--path", type=str, help="path name to store plot.")
+    args = parser.parse_args()
+    print('[pypiplot] >Booting up: username: [%s], Libraries: [%s]' %(args.username, args.library))
+    # Initialize library
+    pp = pypiplot(username=args.username)
+    # Update
+    pp.update(repo=args.library)
+    # Get the statistics
+    pp.stats()
+    # Store
+    pp.plot_year(path=args.path, vmin=700)
