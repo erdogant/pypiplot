@@ -6,7 +6,7 @@ read -p "Press [Enter] to push to Git.."
 
 echo ""
 echo "Go to dir: erdogant.github.io"
-cd D:\PY\REPOSITORIES\erdogant.github.io
+cd D://PY/REPOSITORIES/erdogant.github.io
 
 echo ""
 git pull
