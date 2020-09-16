@@ -131,6 +131,7 @@ pp.plot(vmin=100)
 #### Run pypiplot from terminal
 
 Arguments:
+
     * "-u", "--username" : username github
     * "-l", "--library"  : library name(s)
     * "-p", "--path"     : path name to store plot.
