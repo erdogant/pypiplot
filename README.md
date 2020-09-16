@@ -88,8 +88,8 @@ pp.plot(title='pypiplot')
 ```
 
 <p align="center">
-  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_default.png" width="450" />
-  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_year_default.png" width="450" />
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_default.png" width="450" />
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_year_default.png" width="450" />
 </p>
 
 
@@ -102,8 +102,8 @@ pp.plot(vmin=100, cmap='interpolateYlOrRd')
 ```
 
 <p align="center">
-  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_1.png" width="450" />
-  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_year_1.png" width="450" />
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_1.png" width="450" />
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_year_1.png" width="450" />
 </p>
 
 
