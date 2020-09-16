@@ -12,7 +12,11 @@ pp = pypiplot(username='erdogant')
 pp.update()
 
 # %% Update single repo
+pp.update(repo=['bnlearn'])
 pp.update(repo='bnlearn')
+
+results = pp.stats(repo=['df2onehot','pca'])
+results = pp.stats(repo='df2onehot')
 
 # %% Get some stats
 results = pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])

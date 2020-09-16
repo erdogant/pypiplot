@@ -43,12 +43,14 @@ class pypiplot:
         None.
 
         """
+        if (repo is not None) and ('str' in str(type(repo))):
+            repo = [repo]
         # Extract all repos
         repos = self._get_repo_names_from_git()
-        # Check whether specific repo exists.
-        if repo is not None:
-            if not np.any(np.isin(repos, repo)): raise ValueError('[pypiplot] >Error: repos [%s] does not exists or is private.' %(repo))
-            repos = [repo]
+        if (repo is not None):
+            repos = repo
+            if not np.any(np.isin(repos, repo)):
+                raise ValueError('[pypiplot] >Error: repos [%s] does not exists or is private.' %(repo))
 
         if self.verbose>=3: print('[pypiplot] >Start updating..')
         for repo in repos:
@@ -97,7 +99,11 @@ class pypiplot:
             * n_libraries : Number of libraries processed.
 
         """
+        # Retrieve all repos for the username
         status, repos, filenames, pathnames = self._get_repos()
+
+        if (repo is not None) and ('str' in str(type(repo))):
+            repo = [repo]
 
         # Check whether specific repo exists.
         if repo is not None:
@@ -237,7 +243,7 @@ class pypiplot:
             Minimum color: Used for colorscheme.
             None: Take the maximum value in the matrix.
         cmap : String, (default: 'interpolateInferno').
-            The colormap scheme. This can be found at: https://github.com/d3/d3-scale-chromatic.
+            The colormap scheme. This can be found at: https://github.com/d3/d3-scale-chromatic
         width : int, (default: 700).
             Width of the window.
         height : int, (default: None).
@@ -261,7 +267,7 @@ class pypiplot:
             else:
                 description = '%.0d Pypi downloads last year for %s' %(self.results['heatmap'].sum().sum(), self.results['repos'][0])
         if height is None:
-            height = np.minimum(40 * heatmap.shape[1], 550)
+            height = np.maximum(np.minimum(40 * heatmap.shape[1], 550), 200)
 
         # Make heatmap with d3js.
         imagesc.d3(heatmap.T, fontsize=9, title=title, description=description, path=path, width=700, height=height, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black')
@@ -373,6 +379,7 @@ if __name__ == "__main__":
     parser.add_argument("-u", "--username", type=str, help="username github.")
     parser.add_argument("-l", "--library", type=str, help="library name(s).")
     parser.add_argument("-p", "--path", type=str, help="path name to store plot.")
+    parser.add_argument("-v", "--vmin", type=str, help="minimu value of the figure.")
     args = parser.parse_args()
     print('[pypiplot] >Booting up: username: [%s], Libraries: [%s]' %(args.username, args.library))
     # Initialize library
@@ -382,4 +389,4 @@ if __name__ == "__main__":
     # Get the statistics
     pp.stats()
     # Store
-    pp.plot_year(path=args.path, vmin=700)
+    pp.plot_year(path=args.path, vmin=float(args.vmin))

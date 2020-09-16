@@ -1,5 +1,7 @@
+cd D://PY/REPOSITORIES/pypiplot
+
 echo "Run pypiplot.."
-python pypiplot/pypiplot.py -u 'erdogant' -p 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
+python pypiplot/pypiplot.py -u 'erdogant' -p 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html' -v '700'
 
 echo ""
 read -p "Press [Enter] to push to Git.."

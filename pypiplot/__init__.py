@@ -15,9 +15,20 @@ Python package to count and plot the number of downloads from Pypi.
 
 Example
 -------
->>> import pypiplot as pypiplot
->>> model = pypiplot.fit(X)
->>> fig,ax = pypiplot.plot(model)
+>>> from pypiplot import pypiplot
+>>> pp = pypiplot(username='github_name')
+>>> pp.update()
+>>> pp.stats()
+>>> pp.plot_year()
+>>> pp.plot()
+>>>
+>>> # Selected repos
+>>> pp.update(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
+>>> # Compute download statistics
+>>> pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
+>>> # Make plot
+>>> pp.plot_year()
+>>> pp.plot()
 
 References
 ----------

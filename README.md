@@ -3,60 +3,108 @@
 [![Python](https://img.shields.io/pypi/pyversions/pypiplot)](https://img.shields.io/pypi/pyversions/pypiplot)
 [![PyPI Version](https://img.shields.io/pypi/v/pypiplot)](https://pypi.org/project/pypiplot/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/erdogant/pypiplot/blob/master/LICENSE)
-[![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/month)
 [![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)
+[![Github Forks](https://img.shields.io/github/forks/erdogant/pypiplot.svg)](https://github.com/erdogant/pypiplot/network)
+[![GitHub Open Issues](https://img.shields.io/github/issues/erdogant/pypiplot.svg)](https://github.com/erdogant/pypiplot/issues)
+[![Project Status](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/pypiplot/)
+[![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/month)
 
 
-* pypiplot is Python package
+* pypiplot is Python package to count and plot the number of downloads from Pypi.
 
-### Contents
-- [Installation](#-installation)
-- [Contribute](#-contribute)
-- [Citation](#-citation)
-- [Maintainers](#-maintainers)
-- [License](#-copyright)
 
 ### Installation
 * Install pypiplot from PyPI (recommended). pypiplot is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
-* A new environment can be created as following:
 
 ```bash
-conda create -n env_pypiplot python=3.7
-conda activate env_pypiplot
+pip install pypiplot    # normal install
+pip install -U pypiplot # or update if needed
 ```
-
-```bash
-pip install pypiplot            # normal install
-pip install --upgrade pypiplot # or update if needed
-```
-
-* Alternatively, you can install from the GitHub source:
-```bash
-# Directly install from github source
-pip install -e git://github.com/erdogant/pypiplot.git@0.1.0#egg=master
-pip install git+https://github.com/erdogant/pypiplot#egg=master
-pip install git+https://github.com/erdogant/pypiplot
-
-# By cloning
-git clone https://github.com/erdogant/pypiplot.git
-cd pypiplot
-pip install -U .
-```  
 
 #### Import pypiplot package
 ```python
 import pypiplot as pypiplot
 ```
 
-#### Example:
+#### Example update repos to disk:
 ```python
-df = pd.read_csv('https://github.com/erdogant/hnet/blob/master/pypiplot/data/example_data.csv')
-model = pypiplot.fit(df)
-G = pypiplot.plot(model)
+from pypiplot import pypiplot
+
+# Download all data for github user.
+pp = pypiplot(username='erdogant')
+
+# Update all repos
+pp.update()
+
+# Update single repo
+pp.update(repo=['bnlearn','hnet'])
+
+# Get some stats
+results = pp.stats(repo=['df2onehot','pca','bnlearn'])
+
 ```
+
+#### Example show repo download stats:
+```python
+from pypiplot import pypiplot
+
+# Download all data for github user.
+pp = pypiplot(username='erdogant')
+
+# Get total stats across all repos
+results = pp.stats()
+
+# Get some stats
+results = pp.stats(repo=['df2onehot','pca','bnlearn'])
+
+print(results.keys())
+# ['data', 'heatmap', 'n_libraries', 'repos']
+
+# Print data
+print(results['data'])
+
+#             bnlearn  df2onehot    pca
+# date                                 
+# 2020-05-01    100.0       18.0  281.0
+# 2020-05-02      6.0        4.0  260.0
+# 2020-05-03     50.0       16.0  126.0
+# 2020-05-04     82.0       64.0   86.0
+# 2020-05-05     64.0      157.0   50.0
+#             ...        ...    ...
+# 2020-09-11    148.0      213.0   78.0
+# 2020-09-12     96.0      102.0  144.0
+# 2020-09-13     12.0       42.0  197.0
+# 2020-09-14    156.0       92.0  244.0
+# 2020-09-15     40.0       76.0  225.0
+
+```
+
+#### Example make plots
+
+```python
+pp.plot_year(title='pypiplot')
+pp.plot(title='pypiplot')
+
+```
+
 <p align="center">
-  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/fig1.png" width="600" />
+  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_default.png" width="450" />
+  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_year_default.png" width="450" />
+</p>
+
+
+**Change some of the colors and the minimum cut-off value**
+
+```python
+pp.plot_year(vmin=100, cmap='interpolateYlOrRd')
+pp.plot(vmin=100, cmap='interpolateYlOrRd')
+
+```
+
+<p align="center">
+  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_1.png" width="450" />
+  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_year_1.png" width="450" />
 </p>
 
 
