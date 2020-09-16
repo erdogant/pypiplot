@@ -40,9 +40,6 @@ pp.update()
 # Update single repo
 pp.update(repo=['bnlearn','hnet'])
 
-# Get some stats
-results = pp.stats(repo=['df2onehot','pca','bnlearn'])
-
 ```
 
 #### Example show repo download stats:
@@ -106,6 +103,31 @@ pp.plot(vmin=100, cmap='interpolateYlOrRd')
   <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_1.png" width="450" />
   <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_year_1.png" width="450" />
 </p>
+
+
+**Plot all repos for github username**
+
+```python
+
+# Download all data for github user.
+pp = pypiplot(username='erdogant')
+
+# Get total stats across all repos
+results = pp.stats()
+
+# Get some stats
+results = pp.stats()
+
+pp.plot_year(vmin=700, title='Total downloads across all repos')
+pp.plot(vmin=100)
+
+```
+
+<p align="center">
+  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_total.png" width="450" />
+  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_total.png" width="450" />
+</p>
+
 
 
 #### Citation
