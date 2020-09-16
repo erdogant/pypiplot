@@ -128,6 +128,20 @@ pp.plot(vmin=100)
 </p>
 
 
+#### Run pypiplot from terminal
+
+Arguments:
+    * "-u", "--username" : username github
+    * "-l", "--library"  : library name(s)
+    * "-p", "--path"     : path name to store plot.
+    * "-v", "--vmin"     : minimun value of the figure.
+
+
+```bash
+
+> python pypiplot/pypiplot.py -u 'erdogant' -p 'C://pypi_heatmap.html' -v '700'
+
+```
 
 #### Citation
 Please cite pypiplot in your publications if this is useful for your research. Here is an example BibTeX entry:
