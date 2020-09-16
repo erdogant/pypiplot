@@ -123,8 +123,8 @@ pp.plot(vmin=100)
 ```
 
 <p align="center">
-  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_total.png" width="450" />
-  <img src="https://github.com/erdogant/distfit/blob/master/docs/figs/plot_total.png" width="450" />
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_total.png" width="450" />
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_total.png" width="450" />
 </p>
 
 
