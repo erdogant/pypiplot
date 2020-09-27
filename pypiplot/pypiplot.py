@@ -16,14 +16,42 @@ import pandas as pd
 import numpy as np
 import os
 
+
 # %%
 class pypiplot:
-    def __init__(self, username, category=['with_mirrors', 'without_mirrors'], sep=';', verbose=3):
+    """Class pypiplot."""
+
+    def __init__(self, username, category=['with_mirrors', 'without_mirrors'], sep=';', savepath=None, verbose=3):
+        """Initialize pypiplot.
+
+        Parameters
+        ----------
+        username : String
+            Github user account name.
+        category : list, optional
+            Downloads is counted for one or both of these categories ['with_mirrors', 'without_mirrors'].
+        sep : str, (Default: ';')
+            Seperator to store data in csv file.
+        savepath : String, (Default: None)
+            Storage of the csv files containing download statistics.
+        verbose : int, (Default: 3)
+            Verbosity message.
+
+        Returns
+        -------
+        None.
+
+        """
         self.username = username
         self.repo_link = 'https://api.github.com/users/' + username + '/repos'
         self.sep = sep
         self.category = category
-        self.curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+        self.curpath = os.path.dirname(os.path.abspath(__file__))
+        # self.curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+        if savepath is None:
+            self.savepath = os.path.join(self.curpath, 'data')
+        else:
+            self.savepath = savepath
         self.verbose=verbose
 
     def update(self, repo=None):
@@ -65,7 +93,7 @@ class pypiplot:
                 del df['percent']
 
                 # Merge with any on disk
-                pathname = os.path.join(self.curpath, repo + '.csv')
+                pathname = os.path.join(self.savepath, repo + '.csv')
                 if os.path.isfile(pathname):
                     # Read repo from disk
                     df_disk = read_repo_counts_from_disk(pathname, self.sep)
@@ -166,14 +194,14 @@ class pypiplot:
     def _get_repos(self):
         status = True
         # Retrieve all downloads from disk
-        repos, filenames, pathnames = get_files_on_disk(self.curpath, verbose=self.verbose)
+        repos, filenames, pathnames = get_files_on_disk(self.savepath, verbose=self.verbose)
         # Update and retrieve if needed
         if len(repos)==0:
             if self.verbose>=3: print('[pypiplot] >No files found on disk. Lets update first!')
             # Update all repos
             self.update()
             # Retrieve all downloads from disk
-            repos, filenames, pathnames = get_files_on_disk(self.curpath, verbose=0)
+            repos, filenames, pathnames = get_files_on_disk(self.savepath, verbose=0)
             if len(repos)==0:
                 status = False
         # Return

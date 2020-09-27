@@ -6,7 +6,7 @@ from pypiplot import pypiplot
 print(dir(pypiplot))
 
 # %%
-pp = pypiplot(username='erdogant')
+pp = pypiplot(username='erdogant', savepath='D://PY/REPOSITORIES/pypiplot/repo_data/')
 
 # %% Update all
 pp.update()
@@ -57,19 +57,16 @@ pp.plot_year(vmin=700)
 pp.plot(vmin=25)
 
 # %% Plot
-pp.stats()
+# Init
+pp = pypiplot(username='erdogant', savepath='D://PY/REPOSITORIES/pypiplot/repo_data/')
+# Get download statistics
+results = pp.stats()
+
+# Store svg on github.io
 path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
 pp.plot_year(path=path, vmin=700)
-
+# Store all repo info in github.io
 path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_repos.html'
 pp.plot(path=path, vmin=100)
 
 # %%
-
-# import seaborn as sns
-# idx= ['aaa','bbb','ccc','ddd','eee']
-# cols = list('ABCD')
-# df = pd.DataFrame(abs(np.random.randn(5,4)), index=idx, columns=cols)
-
-# # _r reverses the normal order of the color map 'RdYlGn'
-# sns.heatmap(dfnew, cmap='RdYlGn_r', linewidths=0.5, annot=False)
