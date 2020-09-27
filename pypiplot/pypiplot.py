@@ -6,7 +6,7 @@
 # Licence     : See licences
 # --------------------------------------------------
 
-import imagesc
+from d3heatmap import d3heatmap as d3
 import pypistats
 import requests
 import matplotlib.pyplot as plt
@@ -219,7 +219,7 @@ class pypiplot:
         if title is None:
             title = ''
         # Make heatmap with d3js.
-        imagesc.d3(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black', showfig=visible)
+        d3.matrix(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black', showfig=visible)
 
     def plot(self, title=None, description=None, path='d3_heatmap_repos.html', vmin=10, vmax=None, width=700, height=None, cmap='interpolateGreens'):
         """Plot heatmap across all repos.
@@ -270,7 +270,7 @@ class pypiplot:
             height = np.maximum(np.minimum(40 * heatmap.shape[1], 550), 200)
 
         # Make heatmap with d3js.
-        imagesc.d3(heatmap.T, fontsize=9, title=title, description=description, path=path, width=700, height=height, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black')
+        d3.matrix(heatmap.T, fontsize=9, title=title, description=description, path=path, width=700, height=height, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black')
 
         # fig, ax = plt.subplots(figsize=(10, 2))
         # out.plot()
@@ -324,6 +324,7 @@ def _compute_history_heatmap(df, duration=360, nr_days=7, verbose=3):
 
     # Column names
     colnames = df_fin.index.week.astype(str).values
+    # colnames = pd.Int64Index(idx.isocalendar().week
     colnames = colnames.reshape((-1, nr_days))[:, -1]
     rownames = df_fin.index.day_name().values.reshape((-1, nr_days))[0, :]
     rownames = np.array(list(map(lambda x: x[0:3], rownames))).astype('O')

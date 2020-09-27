@@ -13,7 +13,7 @@ else:
 with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
-     install_requires=['matplotlib','numpy','pandas','pypistats','imagesc'],
+     install_requires=['matplotlib','numpy','pandas','pypistats','d3heatmap'],
      python_requires='>=3',
      name='pypiplot',
      version=new_version,
