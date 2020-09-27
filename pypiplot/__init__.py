@@ -32,6 +32,6 @@ Example
 
 References
 ----------
-https://github.com/erdogant/pypiplot
+* https://github.com/erdogant/pypiplot
 
 """
