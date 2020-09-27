@@ -62,7 +62,7 @@ path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.ht
 pp.plot_year(path=path, vmin=700)
 
 path = 'D://PY/REPOSITORIES/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_repos.html'
-pp.plot(path=path, vmin=10)
+pp.plot(path=path, vmin=100)
 
 # %%
 
