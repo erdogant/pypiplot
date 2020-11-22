@@ -7,8 +7,7 @@
 [![Github Forks](https://img.shields.io/github/forks/erdogant/pypiplot.svg)](https://github.com/erdogant/pypiplot/network)
 [![GitHub Open Issues](https://img.shields.io/github/issues/erdogant/pypiplot.svg)](https://github.com/erdogant/pypiplot/issues)
 [![Project Status](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/month)
-
+[![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/)
 
 * pypiplot is Python package to count and plot the number of downloads from Pypi.
 
