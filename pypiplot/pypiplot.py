@@ -240,9 +240,9 @@ class pypiplot:
         """
         if description is None:
             if self.results['n_libraries']>1:
-                description = '%.0d Pypi downloads last year across %.0d libraries' %(self.results['heatmap'].sum().sum(), self.results['n_libraries'])
+                description = '%.0d Total Pypi downloads across %.0d libraries' %(self.results['heatmap'].sum().sum(), self.results['n_libraries'])
             else:
-                description = '%.0d Pypi downloads last year for %s' %(self.results['heatmap'].sum().sum(), self.results['repos'][0])
+                description = '%.0d Total Pypi downloads for %s' %(self.results['heatmap'].sum().sum(), self.results['repos'][0])
 
         if title is None:
             title = ''
@@ -351,7 +351,8 @@ def _compute_history_heatmap(df, duration=360, nr_days=7, verbose=3):
     df_values = df_fin.values.reshape((-1, nr_days))
 
     # Column names
-    colnames = df_fin.index.week.astype(str).values
+    colnames = df_fin.index.isocalendar().week.astype(str).values
+    
     # colnames = pd.Int64Index(idx.isocalendar().week
     colnames = colnames.reshape((-1, nr_days))[:, -1]
     rownames = df_fin.index.day_name().values.reshape((-1, nr_days))[0, :]
