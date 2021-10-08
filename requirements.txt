@@ -1,9 +1,6 @@
-#conda create -n env_pypiplot python=3.6
-#conda activate env_pypiplot
-#conda install spyder
-
 matplotlib 
 numpy 
 pandas 
 imagesc
 pypistats
+d3heatmap
