@@ -69,3 +69,4 @@ path = 'D://REPOS/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_repos.html'
 pp.plot(path=path, vmin=100)
 
 # %%
+results['data'].cumsum().plot()
