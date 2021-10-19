@@ -3,12 +3,13 @@
 [![Python](https://img.shields.io/pypi/pyversions/pypiplot)](https://img.shields.io/pypi/pyversions/pypiplot)
 [![PyPI Version](https://img.shields.io/pypi/v/pypiplot)](https://pypi.org/project/pypiplot/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/erdogant/pypiplot/blob/master/LICENSE)
-[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)
+[![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-brown.svg)](https://www.buymeacoffee.com/erdogant)
 [![Github Forks](https://img.shields.io/github/forks/erdogant/pypiplot.svg)](https://github.com/erdogant/pypiplot/network)
 [![GitHub Open Issues](https://img.shields.io/github/issues/erdogant/pypiplot.svg)](https://github.com/erdogant/pypiplot/issues)
 [![Project Status](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/)
 [![Downloads](https://pepy.tech/badge/pypiplot)](https://pepy.tech/project/pypiplot)
+<!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
 * pypiplot is Python package to count and plot the number of downloads from Pypi.
 
