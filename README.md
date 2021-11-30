@@ -9,7 +9,6 @@
 [![Project Status](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/)
 [![Downloads](https://pepy.tech/badge/pypiplot)](https://pepy.tech/project/pypiplot)
-[![DOI](https://zenodo.org/badge/278702058.svg)](https://zenodo.org/badge/latestdoi/278702058)
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
 * pypiplot is Python package to count and plot the number of downloads from Pypi.
