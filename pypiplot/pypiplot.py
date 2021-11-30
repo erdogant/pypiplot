@@ -207,7 +207,7 @@ class pypiplot:
         # Return
         return status, repos, filenames, pathnames
 
-    def plot_year(self, title=None, description=None, path='d3heatmap.html', vmin=10, vmax=None, cmap='interpolateGreens', visible=True):
+    def plot_year(self, title=None, description=None, path='d3heatmap.html', vmin=10, vmax=None, cmap='interpolateGreens', visible=True, overwrite=False):
         """Plot heatmap across all repos.
 
         Description

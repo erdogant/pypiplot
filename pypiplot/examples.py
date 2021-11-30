@@ -3,7 +3,28 @@
 # print(pypiplot.__version__)
 
 from pypiplot import pypiplot
-print(dir(pypiplot))
+# print(dir(pypiplot))
+
+# %% Plot
+# Init
+pp = pypiplot(username='erdogant', savepath='D://REPOS/pypiplot/repo_data/')
+# Get download statistics
+results = pp.stats()
+
+# Store svg on github.io
+path = 'D://REPOS/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
+pp.plot_year(path=path, vmin=700)
+# Store all repo info in github.io
+path = 'D://REPOS/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_repos.html'
+pp.plot(path=path, vmin=100)
+
+
+# %%
+pp = pypiplot(username='erdogant')
+
+pp.stats(repo='distfit')
+pp.plot_year()
+pp.plot(vmin=25)
 
 # %% Update all
 pp = pypiplot(username='erdogant', savepath='D://REPOS/pypiplot/repo_data/')
