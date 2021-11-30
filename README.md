@@ -146,17 +146,6 @@ Arguments:
 
 ```
 
-#### Citation
-Please cite pypiplot in your publications if this is useful for your research. Here is an example BibTeX entry:
-```BibTeX
-@misc{erdogant2020pypiplot,
-  title={pypiplot},
-  author={Erdogan Taskesen},
-  year={2020},
-  howpublished={\url{https://github.com/erdogant/pypiplot}},
-}
-```
-
 #### References
 * https://github.com/erdogant/pypiplot
 
