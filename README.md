@@ -9,6 +9,7 @@
 [![Project Status](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/)
 [![Downloads](https://pepy.tech/badge/pypiplot)](https://pepy.tech/project/pypiplot)
+[![DOI](https://zenodo.org/badge/293334020.svg)](https://zenodo.org/badge/latestdoi/293334020)
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
 * pypiplot is Python package to count and plot the number of downloads from Pypi.
@@ -143,17 +144,6 @@ Arguments:
 
 > python pypiplot/pypiplot.py -u 'erdogant' -p 'C://pypi_heatmap.html' -v '700'
 
-```
-
-#### Citation
-Please cite pypiplot in your publications if this is useful for your research. Here is an example BibTeX entry:
-```BibTeX
-@misc{erdogant2020pypiplot,
-  title={pypiplot},
-  author={Erdogan Taskesen},
-  year={2020},
-  howpublished={\url{https://github.com/erdogant/pypiplot}},
-}
 ```
 
 #### References
