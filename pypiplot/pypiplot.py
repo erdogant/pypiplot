@@ -1,11 +1,4 @@
-# --------------------------------------------------
-# Name        : pypiplot.py
-# Author      : E.Taskesen
-# Contact     : erdogant@gmail.com
-# github      : https://github.com/erdogant/pypiplot
-# Licence     : See licences
-# --------------------------------------------------
-
+"""Pypiplot."""
 from d3heatmap import d3heatmap as d3
 import pypistats
 import requests

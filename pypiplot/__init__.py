@@ -1,4 +1,4 @@
-from pypiplot.pypiplot import pypiplot
+from pypiplot.pypiplot import Pypiplot
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
@@ -16,7 +16,7 @@ Python package to count and plot the number of downloads from Pypi.
 Example
 -------
 >>> from pypiplot import pypiplot
->>> pp = pypiplot(username='github_name')
+>>> pp = Pypiplot(username='github_name')
 >>> pp.update()
 >>> pp.stats()
 >>> pp.plot_year()
