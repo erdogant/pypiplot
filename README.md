@@ -30,7 +30,7 @@ import pypiplot as pypiplot
 
 #### Example update repos to disk:
 ```python
-from pypiplot import pypiplot
+from pypiplot import Pypiplot
 
 # Download all data for github user.
 pp = pypiplot(username='erdogant')
@@ -45,7 +45,7 @@ pp.update(repo=['bnlearn','hnet'])
 
 #### Example show repo download stats:
 ```python
-from pypiplot import pypiplot
+from pypiplot import Pypiplot
 
 # Download all data for github user.
 pp = pypiplot(username='erdogant')
@@ -82,7 +82,9 @@ print(results['data'])
 
 ```python
 pp.plot_year(title='pypiplot')
-pp.plot(title='pypiplot')
+pp.plot_heatmap(title='pypiplot')
+pp.plot()
+pp.plot_cal()
 
 ```
 
@@ -121,6 +123,8 @@ results = pp.stats()
 
 pp.plot_year(vmin=700, title='Total downloads across all repos')
 pp.plot(vmin=100)
+pp.plot()
+pp.plot_cal()
 
 ```
 
