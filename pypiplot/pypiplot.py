@@ -8,10 +8,11 @@ import argparse
 import pandas as pd
 import numpy as np
 import os
+from calplot import calplot, yearplot
 
 
 # %%
-class pypiplot:
+class Pypiplot:
     """Class pypiplot."""
 
     def __init__(self, username, category=['with_mirrors', 'without_mirrors'], sep=';', savepath=None, verbose=3):
@@ -152,7 +153,7 @@ class pypiplot:
             df.reset_index(drop=False, inplace=True)
 
             dftmp = df.groupby("date").sum()
-            dftmp.rename(columns={'downloads' : repo}, inplace=True)
+            dftmp.rename(columns={'downloads': repo}, inplace=True)
             out = pd.concat([out, dftmp], axis=0)
 
         out.fillna(value=0, inplace=True)
@@ -200,6 +201,29 @@ class pypiplot:
         # Return
         return status, repos, filenames, pathnames
 
+    def plot_cal(self, method='mean', vmin=None, vmax=None, cmap='YlGn', norm=False):
+
+        X = self.results['data'].copy()
+        if vmin is not None:
+            X[X<=vmin]=vmin
+        if vmax is not None:
+            X[X>=vmax]=vmax
+
+        if norm:
+            print('[pypiplot]> Normalizing..')
+            X = (X-X.mean(axis=0)) / X.std(axis=0)
+
+        print('[pypiplot]> Method: [%s]' %(method))
+        if method=='median':
+            events=X.median(axis=1)
+        elif method=='mean':
+            events=X.mean(axis=1)
+        else:
+            events=X.sum(axis=1)
+        # Make the calender
+        plt.figure()
+        calplot(events, cmap=cmap, colorbar=False, figsize=None, suptitle=None)
+
     def plot_year(self, title=None, description=None, path='d3heatmap.html', vmin=10, vmax=None, cmap='interpolateGreens', visible=True, overwrite=False):
         """Plot heatmap across all repos.
 
@@ -240,9 +264,22 @@ class pypiplot:
         if title is None:
             title = ''
         # Make heatmap with d3js.
-        d3.matrix(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black', showfig=visible)
+        d3.matrix(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black', showfig=visible, overwrite=True)
 
-    def plot(self, title=None, description=None, path='d3_heatmap_repos.html', vmin=10, vmax=None, width=700, height=None, cmap='interpolateGreens'):
+    def plot(self, title=None, method='mean', figsize=(15,10)):
+        plt.figure()
+        if method=='median':
+            self.results['data'].rolling(window=30).median().plot(figsize=figsize)
+        elif method=='sum':
+            self.results['data'].rolling(window=30).sum().plot(figsize=figsize)
+        else:
+            self.results['data'].rolling(window=30).mean().plot(figsize=figsize)
+        plt.xlabel('Date')
+        plt.ylabel('Average number of downloads in a rolling window of 30 days')
+        plt.grid(True)
+        plt.title(title)
+
+    def plot_heatmap(self, title=None, description=None, path='d3_heatmap_repos.html', vmin=10, vmax=None, width=700, height=None, cmap='interpolateGreens'):
         """Plot heatmap across all repos.
 
         Description
@@ -291,7 +328,7 @@ class pypiplot:
             height = np.maximum(np.minimum(40 * heatmap.shape[1], 550), 200)
 
         # Make heatmap with d3js.
-        d3.matrix(heatmap.T, fontsize=9, title=title, description=description, path=path, width=700, height=height, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black')
+        d3.matrix(heatmap.T, fontsize=9, title=title, description=description, path=path, width=700, height=height, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black', overwrite=True)
 
         # fig, ax = plt.subplots(figsize=(10, 2))
         # out.plot()
@@ -345,7 +382,7 @@ def _compute_history_heatmap(df, duration=360, nr_days=7, verbose=3):
 
     # Column names
     colnames = df_fin.index.isocalendar().week.astype(str).values
-    
+
     # colnames = pd.Int64Index(idx.isocalendar().week
     colnames = colnames.reshape((-1, nr_days))[:, -1]
     rownames = df_fin.index.day_name().values.reshape((-1, nr_days))[0, :]
@@ -372,7 +409,7 @@ def get_files_on_disk(curpath, verbose=3):
     repos = repos[Iloc]
     # Make full path
     pathnames = np.array(list(map(lambda x: os.path.join(curpath, x), filenames)))
-    return repos, filenames, pathnames 
+    return repos, filenames, pathnames
 
 def read_repo_counts_from_disk(pathname, sep):
     df_disk = pd.read_csv(pathname, sep=sep)
@@ -406,7 +443,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print('[pypiplot] >Booting up: username: [%s], Libraries: [%s]' %(args.username, args.library))
     # Initialize library
-    pp = pypiplot(username=args.username)
+    pp = Pypiplot(username=args.username)
     # Update
     pp.update(repo=args.library)
     # Get the statistics
