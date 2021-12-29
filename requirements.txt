@@ -4,3 +4,5 @@ pandas
 imagesc
 pypistats
 d3heatmap
+fsspec
+calplot
