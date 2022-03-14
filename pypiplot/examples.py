@@ -1,10 +1,22 @@
 import pypiplot
-print(pypiplot.__version__)
+# print(pypiplot.__version__)
 # print(dir(Pypiplot))
 from pypiplot import Pypiplot
 
 
-# %%
+# %% Top 10 best repos
+
+pp = Pypiplot(username='erdogant', savepath='D://REPOS/pypiplot/repo_data/')
+# Get download statistics
+pp.stats()
+# Get top 10
+repo=pp.results['data'].sum().sort_values()[-10:].index.values
+# Get stats for the top10
+pp.stats(repo=repo)
+# Plot
+pp.plot()
+#
+pp.plot_year()
 
 
 # %% Plot
@@ -15,11 +27,11 @@ results = pp.stats()
 
 # Store svg on github.io
 # path = 'D://REPOS/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
+path = 'D://REPOS/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html'
 path = 'C://temp/pypi_heatmap.html'
 pp.plot_year(path=path, vmin=700)
 # Store all repo info in github.io
-path = 'D://REPOS/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_repos.html'
-pp.plot(path=path, vmin=100)
+pp.plot(legend=False)
 
 
 # %%
@@ -29,9 +41,6 @@ pp.stats(repo='distfit')
 pp.plot_year()
 pp.plot(vmin=25)
 
-# %% Update all
-pp = Pypiplot(username='erdogant', savepath='D://REPOS/pypiplot/repo_data/')
-pp.update()
 
 # %% Update single repo
 pp.update(repo=['bnlearn'])
@@ -42,6 +51,7 @@ results = pp.stats(repo='df2onehot')
 
 # %% Get some stats
 results = pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])
+pp.plot(legend=True)
 
 # %%
 pp = Pypiplot(username='erdogant')
