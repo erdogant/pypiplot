@@ -17,6 +17,11 @@ pp.stats(repo=repo)
 pp.plot()
 #
 pp.plot_year()
+# 
+pp.plot_cal()
+# 
+path = 'D://REPOS/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_full.html'
+pp.plot_heatmap(vmin=10, vmax=2000, cmap='interpolateOranges', path=path)
 
 
 # %% Plot
