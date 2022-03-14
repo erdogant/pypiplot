@@ -305,6 +305,7 @@ class Pypiplot:
             None: Take the maximum value in the matrix.
         cmap : String, (default: 'interpolateInferno').
             The colormap scheme. This can be found at: https://github.com/d3/d3-scale-chromatic
+            'interpolateOranges'
         width : int, (default: 700).
             Width of the window.
         height : int, (default: None).
@@ -333,26 +334,6 @@ class Pypiplot:
         # Make heatmap with d3js.
         d3.matrix(heatmap.T, fontsize=9, title=title, description=description, path=path, width=700, height=height, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black', overwrite=True)
 
-        # fig, ax = plt.subplots(figsize=(10, 2))
-        # out.plot()
-
-        # df['weeknr'] = df['date'].dt.week
-        # df['cumsum'] = df['downloads'].cumsum()
-        # ax.plot(df['weeknr'].values, df['cumsum'].values, label=repo)
-        # ax.plot(df['weeknr'].values, df['downloads'].values, label=repo)
-
-        # ax.legend()
-        # ax.grid(True)
-
-        # data = pypistats.overall("pillow", total=True, format="pandas")
-        # df = df.groupby("category").get_group("without_mirrors").sort_values("date")
-        # df = df.groupby("category").get_group("without_mirrors").sort_values("date")
-
-        # chart = df.plot(x="date", y="downloads", figsize=(10, 2))
-        # chart = df.plot(x="date", y="downloads", figsize=(10, 2))
-        # chart.figure.show()
-        # chart.figure.savefig("overall.png")  # alternatively
-        pass
 
 # %%
 def _compute_history_heatmap(df, duration=360, nr_days=7, verbose=3):
