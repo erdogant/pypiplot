@@ -2,7 +2,7 @@ Input
 ###########################
 
 
-.. automodule:: pypiplot.pypiplot.Pypiplot
+.. automodule:: pypiplot.pypiplot.plot
     :members:
     :undoc-members:
 

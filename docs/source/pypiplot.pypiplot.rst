@@ -2,7 +2,7 @@ API References
 ------------------------------------------------
 
 
-.. automodule:: pypiplot.pypiplot.Pypiplot.plot
+.. automodule:: pypiplot.pypiplot
     :members:
     :undoc-members:
 
