@@ -149,12 +149,17 @@ Arguments:
 > python pypiplot/pypiplot.py -u 'erdogant' -p 'C://pypi_heatmap.html' -v '700'
 
 ```
+<hr>
 
-#### References
-* https://github.com/erdogant/pypiplot
+### Support
 
-### Maintainer
-* Erdogan Taskesen, github: [erdogant](https://github.com/erdogant)
-* Contributions are welcome.
-* If you wish to buy me a <a href="https://erdogant.github.io/donate/?currency=USD&amount=5">Coffee</a> for this work, it is very appreciated :)
-	Star it if you like it!
+	This project needs some love! ❤️ You can help in various ways.
+
+	* Become a Sponsor!
+	* Star this repo at the github page.
+	* Other contributions can be in the form of feature requests, idea discussions, reporting bugs, opening pull requests.
+	* Read more why becoming an sponsor is important on the Sponsor Github Page.
+	
+	Cheers Mate.
+
+
