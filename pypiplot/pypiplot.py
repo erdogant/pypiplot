@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 import os
 from calplot import calplot, yearplot
+import tempfile
 
 
 # %%
@@ -41,9 +42,11 @@ class Pypiplot:
         self.sep = sep
         self.category = category
         self.curpath = os.path.dirname(os.path.abspath(__file__))
+        self.tempdir = os.path.abspath(tempfile.gettempdir())
         # self.curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
         if savepath is None:
-            self.savepath = os.path.join(self.curpath, 'data')
+            self.savepath = os.path.join(self.curpath, 'pypi_data')
+            if not os.path.exists(self.savepath): os.makedirs(self.savepath)
         else:
             self.savepath = savepath
         self.verbose=verbose
@@ -95,10 +98,10 @@ class Pypiplot:
                     df, status = add_new_counts_to_repo(df, df_disk, repo, verbose=self.verbose)
                 # Write to disk
                 if status:
-                    if self.verbose>=3: print('[pypiplot] >Write to disk..')
+                    if self.verbose>=3: print('[pypiplot] >Write to disk: [%s]' %(pathname))
                     df.to_csv(pathname, index=False, sep=self.sep)
             except:
-                if self.verbose>=1: print('[pypiplot] >Skip [%s] coz not exists on Pypi.' %(repo))
+                if self.verbose>=1: print('[pypiplot] >Skip [%s] because could not retrieve statistics from Pypi.' %(repo))
 
     def stats(self, repo=None):
         """Compute statistics for the specified repo(s).
@@ -114,7 +117,7 @@ class Pypiplot:
 
         Returns
         -------
-        dict.
+        dict()
             * data : Download statistics for the repo(s).
             * heatmap : DataFrame containing (summarized) data statistics.
             * repos : Number of repos.
@@ -266,14 +269,14 @@ class Pypiplot:
         # Make heatmap with d3js.
         d3.matrix(self.results['heatmap'], fontsize=9, title=title, description=description, path=path, width=700, height=200, cmap=cmap, vmin=vmin, vmax=vmax, stroke='black', showfig=visible, overwrite=True)
 
-    def plot(self, title=None, method='mean', figsize=(15,10)):
+    def plot(self, title=None, method='mean', legend=True, figsize=(25, 15)):
         plt.figure()
         if method=='median':
-            self.results['data'].rolling(window=30).median().plot(figsize=figsize)
+            self.results['data'].rolling(window=30).median().plot(figsize=figsize, legend=legend)
         elif method=='sum':
-            self.results['data'].rolling(window=30).sum().plot(figsize=figsize)
+            self.results['data'].rolling(window=30).sum().plot(figsize=figsize, legend=legend)
         else:
-            self.results['data'].rolling(window=30).mean().plot(figsize=figsize)
+            self.results['data'].rolling(window=30).mean().plot(figsize=figsize, legend=legend)
         plt.xlabel('Date')
         plt.ylabel('Average number of downloads in a rolling window of 30 days')
         plt.grid(True)

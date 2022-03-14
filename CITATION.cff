@@ -13,7 +13,7 @@ keywords:
   - "pypi-downloads"
 license: "MIT"
 message: "If you use this software, please cite it using these metadata."
-repository-code: "https://github.com/erdogant/pypiplot"
+repository-code: "https://erdogant.github.io/pypiplot"
 title: "Python package to count and plot the number of downloads from Pypi."
 version: "0.1.0"
 ...
