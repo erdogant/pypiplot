@@ -104,7 +104,7 @@ Make heatmap with counts for the last year.
 
 .. raw:: html
 
-   <iframe src="https://erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html" height="350px" width="850px", frameBorder="0"></iframe>
+   <iframe src="https://erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html" height="320px" width="850px", frameBorder="0"></iframe>
 
 
 
@@ -220,7 +220,7 @@ Here U will demonstrate how to gather stats for all repos.
 
 .. raw:: html
 
-   <iframe src="https://erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_full.html" height="600px" width="850px", frameBorder="0"></iframe>
+   <iframe src="https://erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_full.html" height="650px" width="850px", frameBorder="0"></iframe>
 
 
 
