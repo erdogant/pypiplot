@@ -10,145 +10,75 @@
 [![Downloads](https://pepy.tech/badge/pypiplot/month)](https://pepy.tech/project/pypiplot/)
 [![Downloads](https://pepy.tech/badge/pypiplot)](https://pepy.tech/project/pypiplot)
 [![DOI](https://zenodo.org/badge/293334020.svg)](https://zenodo.org/badge/latestdoi/293334020)
+[![Sphinx](https://img.shields.io/badge/Sphinx-Docs-Green)](https://erdogant.github.io/pypiplot/)
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
 * pypiplot is Python package to count and plot the number of downloads from Pypi.
 
+# 
+**⭐️ Star this repo if you like it ⭐️**
+#
 
-### Installation
-* Install pypiplot from PyPI (recommended). pypiplot is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
-
-```bash
-pip install pypiplot    # normal install
-pip install -U pypiplot # or update if needed
-```
-
-#### Import pypiplot package
-```python
-import pypiplot as pypiplot
-```
-
-#### Example update repos to disk:
-```python
-from pypiplot import Pypiplot
-
-# Download all data for github user.
-pp = pypiplot(username='erdogant')
-
-# Update all repos
-pp.update()
-
-# Update single repo
-pp.update(repo=['bnlearn','hnet'])
-
-```
-
-#### Example show repo download stats:
-```python
-from pypiplot import Pypiplot
-
-# Download all data for github user.
-pp = pypiplot(username='erdogant')
-
-# Get total stats across all repos
-results = pp.stats()
-
-# Get some stats
-results = pp.stats(repo=['df2onehot','pca','bnlearn'])
-
-print(results.keys())
-# ['data', 'heatmap', 'n_libraries', 'repos']
-
-# Print data
-print(results['data'])
-
-#             bnlearn  df2onehot    pca
-# date                                 
-# 2020-05-01    100.0       18.0  281.0
-# 2020-05-02      6.0        4.0  260.0
-# 2020-05-03     50.0       16.0  126.0
-# 2020-05-04     82.0       64.0   86.0
-# 2020-05-05     64.0      157.0   50.0
-#             ...        ...    ...
-# 2020-09-11    148.0      213.0   78.0
-# 2020-09-12     96.0      102.0  144.0
-# 2020-09-13     12.0       42.0  197.0
-# 2020-09-14    156.0       92.0  244.0
-# 2020-09-15     40.0       76.0  225.0
-
-```
-
-#### Example make plots
-
-```python
-pp.plot_year(title='pypiplot')
-pp.plot_heatmap(title='pypiplot')
-pp.plot()
-pp.plot_cal()
-
-```
-
-<p align="center">
-  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_default.png" width="450" />
-  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_year_default.png" width="450" />
-</p>
-
-
-**Change some of the colors and the minimum cut-off value**
-
-```python
-pp.plot_year(vmin=100, cmap='interpolateYlOrRd')
-pp.plot(vmin=100, cmap='interpolateYlOrRd')
-
-```
-
-<p align="center">
-  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_1.png" width="450" />
-  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_year_1.png" width="450" />
-</p>
-
-
-**Plot all repos for github username**
-
-```python
-
-# Download all data for github user.
-pp = pypiplot(username='erdogant')
-
-# Get total stats across all repos
-results = pp.stats()
-
-# Get some stats
-results = pp.stats()
-
-pp.plot_year(vmin=700, title='Total downloads across all repos')
-pp.plot(vmin=100)
-pp.plot()
-pp.plot_cal()
-
-```
-
-<p align="center">
-  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_year_total.png" width="450" />
-  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_total.png" width="450" />
-</p>
-
-
-#### Run pypiplot from terminal
-
-Arguments:
-
-    * "-u", "--username" : username github
-    * "-l", "--library"  : library name(s)
-    * "-p", "--path"     : path name to store plot.
-    * "-v", "--vmin"     : minimun value of the figure.
-
+#### Install Pypiplot from PyPI
 
 ```bash
-
-> python pypiplot/pypiplot.py -u 'erdogant' -p 'C://pypi_heatmap.html' -v '700'
-
+pip install Pypiplot
 ```
+
+#### Import Pypiplot package
+
+```python
+from pypiplot import Pypiplot
+```
+# 
+
+
+### [Documentation pages](https://erdogant.github.io/Pypiplot/)
+
+On the [documentation pages](https://erdogant.github.io/Pypiplot/) you can find detailed information about the working of the ``Pypiplot`` with many examples. 
+
+<hr> 
+
+### Examples
+
+# 
+* [Example: Analyze first digit-distribution](https://erdogant.github.io/pypiplot/pages/html/Examples.html#)
+# 
+* [Example: Download Statistics](https://erdogant.github.io/pypiplot/pages/html/Examples.html#download-statistics)
+# 
+* [Example: Top 10 performing repos](https://erdogant.github.io/pypiplot/pages/html/Examples.html#top-10-performing-repos)
+# 
+* [Example: Interactive plot with all repos](https://erdogant.github.io/pypiplot/pages/html/Examples.html#interactive-plot-with-all-repos)
+# 
+* [Example: Run from terminal](https://erdogant.github.io/pypiplot/pages/html/Examples.html#run-pypiplot-from-terminal)
+# 
+* [Example: Calender plot](https://erdogant.github.io/pypiplot/pages/html/Examples.html#calender-plot)
+
+<p align="left">
+  <a href="https://erdogant.github.io/pypiplot/pages/html/Examples.html#calender-plot">
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/calender.png" width="600" />
+  </a>
+</p>
+
+# 
+* [Example: interactive-heatmap](https://erdogant.github.io/pypiplot/pages/html/Examples.html#interactive-heatmap)
+
+<p align="left">
+  <a href="https://erdogant.github.io/pypiplot/pages/html/Examples.html#interactive-heatmap">
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/plot_default.png" width="600" />
+  </a>
+</p>
+
+# 
+* [Example: line-plot](https://erdogant.github.io/pypiplot/pages/html/Examples.html#line-plot)
+
+<p align="left">
+  <a href="https://erdogant.github.io/pypiplot/pages/html/Examples.html#line-plot">
+  <img src="https://github.com/erdogant/pypiplot/blob/master/docs/figs/lineplot.png" width="600" />
+  </a>
+</p>
+
+
 <hr>
 
 ### Support
