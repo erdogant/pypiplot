@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -67,6 +68,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html">Sponsor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#github">Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#citing">Citing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pypiplot.pypiplot.html">API References</a></li>
 </ul>
@@ -98,7 +100,7 @@
            <div itemprop="articleBody">
              
   <section id="update-repos-to-disk">
-<h1>Update repos to disk<a class="headerlink" href="#update-repos-to-disk" title="Permalink to this headline"></a></h1>
+<h1>Update repos to disk<a class="headerlink" href="#update-repos-to-disk" title="Permalink to this heading"></a></h1>
 <p>In the following example we download initialize with the username and download the counts from Pypi for the repos.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">from</span> <span class="nn">pypiplot</span> <span class="kn">import</span> <span class="n">Pypiplot</span>
@@ -115,7 +117,7 @@
 </div>
 </section>
 <section id="download-statistics">
-<h1>Download Statistics<a class="headerlink" href="#download-statistics" title="Permalink to this headline"></a></h1>
+<h1>Download Statistics<a class="headerlink" href="#download-statistics" title="Permalink to this heading"></a></h1>
 <p>Download the statistics from pypi and store on disk.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">from</span> <span class="nn">pypiplot</span> <span class="kn">import</span> <span class="n">Pypiplot</span>
@@ -154,7 +156,7 @@
 </div>
 </section>
 <section id="calender-plot">
-<h1>Calender plot<a class="headerlink" href="#calender-plot" title="Permalink to this headline"></a></h1>
+<h1>Calender plot<a class="headerlink" href="#calender-plot" title="Permalink to this heading"></a></h1>
 <p>Make calender plot with counts.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get stats for all repos</span>
 <span class="n">pp</span><span class="o">.</span><span class="n">stats</span><span class="p">()</span>
@@ -175,7 +177,7 @@
 </table>
 </section>
 <section id="interactive-heatmap">
-<h1>Interactive Heatmap<a class="headerlink" href="#interactive-heatmap" title="Permalink to this headline"></a></h1>
+<h1>Interactive Heatmap<a class="headerlink" href="#interactive-heatmap" title="Permalink to this heading"></a></h1>
 <p>Make heatmap with counts for the last year.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get stats for all repos</span>
 <span class="n">pp</span><span class="o">.</span><span class="n">stats</span><span class="p">()</span>
@@ -186,7 +188,7 @@
 </div>
 <iframe src="https://erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html" height="320px" width="850px", frameBorder="0"></iframe></section>
 <section id="line-plot">
-<h1>Line plot<a class="headerlink" href="#line-plot" title="Permalink to this headline"></a></h1>
+<h1>Line plot<a class="headerlink" href="#line-plot" title="Permalink to this heading"></a></h1>
 <p>Make lineplot with counts.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get stats for all repos</span>
 <span class="n">pp</span><span class="o">.</span><span class="n">stats</span><span class="p">()</span>
@@ -207,7 +209,7 @@
 </table>
 </section>
 <section id="top-10-performing-repos">
-<h1>Top 10 performing repos<a class="headerlink" href="#top-10-performing-repos" title="Permalink to this headline"></a></h1>
+<h1>Top 10 performing repos<a class="headerlink" href="#top-10-performing-repos" title="Permalink to this heading"></a></h1>
 <p>Gather the top 10 top performing repos.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with username</span>
 <span class="n">pp</span> <span class="o">=</span> <span class="n">Pypiplot</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;erdogant&#39;</span><span class="p">)</span>
@@ -237,7 +239,7 @@
 </table>
 </section>
 <section id="analyze-specific-repo">
-<h1>Analyze Specific repo<a class="headerlink" href="#analyze-specific-repo" title="Permalink to this headline"></a></h1>
+<h1>Analyze Specific repo<a class="headerlink" href="#analyze-specific-repo" title="Permalink to this heading"></a></h1>
 <p>Here U will demonstrate how to gather stats and make plot for a specific repo.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with username</span>
 <span class="n">pp</span> <span class="o">=</span> <span class="n">Pypiplot</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;erdogant&#39;</span><span class="p">)</span>
@@ -265,7 +267,7 @@
 </table>
 </section>
 <section id="interactive-plot-with-all-repos">
-<h1>Interactive plot with all repos<a class="headerlink" href="#interactive-plot-with-all-repos" title="Permalink to this headline"></a></h1>
+<h1>Interactive plot with all repos<a class="headerlink" href="#interactive-plot-with-all-repos" title="Permalink to this heading"></a></h1>
 <p>Here U will demonstrate how to gather stats for all repos.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize with username</span>
 <span class="n">pp</span> <span class="o">=</span> <span class="n">Pypiplot</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;erdogant&#39;</span><span class="p">)</span>
@@ -279,7 +281,7 @@
 </div>
 <iframe src="https://erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_full.html" height="650px" width="850px", frameBorder="0"></iframe></section>
 <section id="run-pypiplot-from-terminal">
-<h1>Run pypiplot from terminal<a class="headerlink" href="#run-pypiplot-from-terminal" title="Permalink to this headline"></a></h1>
+<h1>Run pypiplot from terminal<a class="headerlink" href="#run-pypiplot-from-terminal" title="Permalink to this heading"></a></h1>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>* <span class="s2">&quot;-u&quot;</span>, <span class="s2">&quot;--username&quot;</span> : username github
 * <span class="s2">&quot;-l&quot;</span>, <span class="s2">&quot;--library&quot;</span>  : library name<span class="o">(</span>s<span class="o">)</span>
 * <span class="s2">&quot;-p&quot;</span>, <span class="s2">&quot;--path&quot;</span>     : path name to store plot.
