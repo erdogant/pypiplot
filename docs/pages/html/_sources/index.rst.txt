@@ -13,9 +13,9 @@ pypiplot's documentation!
    <iframe src="https://erdogant.github.io/docs/imagesc/pypi/pypi_heatmap.html" height="400px" width="850px", frameBorder="0"></iframe>
 
 
-Star is important
-======================
-If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/pypiplot/>`_!
+You contribution is important
+==============================
+If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/pypiplot/>`_ and have a look at the `sponser page <https://github.com/erdogant/pypiplot/pages/html/Documentation.html>`_!
 
 
 Github
