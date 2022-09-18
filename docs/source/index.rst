@@ -15,7 +15,7 @@ pypiplot's documentation!
 
 You contribution is important
 ==============================
-If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/pypiplot/>`_ and have a look at the `sponser page <https://github.com/erdogant/pypiplot/pages/html/Documentation.html>`_!
+If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/pypiplot/>`_ and have a look at the `sponser page <https://erdogant.github.io/pypiplot/pages/html/Documentation.html>`_!
 
 
 Github
