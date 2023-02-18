@@ -4,6 +4,15 @@ import pypiplot
 from pypiplot import Pypiplot
 
 
+# %% Update all libraries to date.
+pp = Pypiplot(username='erdogant', repo_type=['owner', 'fork'])
+
+pp.update()
+results = pp.stats()
+pp.plot_year(vmin=700)
+pp.plot()
+pp.plot_year()
+
 # %% Top 10 best repos
 
 pp = Pypiplot(username='erdogant', savepath='D://REPOS/pypiplot/repo_data/')
@@ -23,7 +32,6 @@ pp.plot_cal()
 path = 'D://REPOS/erdogant.github.io/docs/imagesc/pypi/pypi_heatmap_full.html'
 pp.plot_heatmap(vmin=10, vmax=2000, cmap='interpolateOranges', path=path)
 
-
 # %% Plot
 # Init
 pp = Pypiplot(username='erdogant', savepath='D://REPOS/pypiplot/repo_data/')
@@ -39,6 +47,13 @@ pp.plot_year(path=path, vmin=700)
 pp.plot(legend=False)
 
 
+# %% D3blocks
+pp = Pypiplot(username='d3blocks')
+pp.update(repo=['d3blocks'])
+pp.stats(repo='d3blocks')
+pp.plot()
+
+
 # %%
 pp = Pypiplot(username='erdogant')
 
@@ -51,8 +66,8 @@ pp.plot(vmin=25)
 pp.update(repo=['bnlearn'])
 pp.update(repo='bnlearn')
 
-results = pp.stats(repo=['df2onehot','pca'])
-results = pp.stats(repo='df2onehot')
+results = pp.stats(repo=['distfit','pca', 'bnlearn'])
+pp.plot(legend=True)
 
 # %% Get some stats
 results = pp.stats(repo=['df2onehot','pca','bnlearn','ismember','thompson'])

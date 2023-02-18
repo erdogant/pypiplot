@@ -16,7 +16,7 @@ import tempfile
 class Pypiplot:
     """Class pypiplot."""
 
-    def __init__(self, username, category=['with_mirrors', 'without_mirrors'], sep=';', savepath=None, verbose=3):
+    def __init__(self, username, category=['with_mirrors', 'without_mirrors'], repo_type=['owner'], sep=';', savepath=None, verbose=3):
         """Initialize pypiplot.
 
         Parameters
@@ -25,6 +25,8 @@ class Pypiplot:
             Github user account name.
         category : list, optional
             Downloads is counted for one or both of these categories ['with_mirrors', 'without_mirrors'].
+        repo_type : list of strings
+            ['private', 'fork', 'owner']
         sep : str, (Default: ';')
             Seperator to store data in csv file.
         savepath : String, (Default: None)
@@ -39,6 +41,7 @@ class Pypiplot:
         """
         self.username = username
         self.repo_link = 'https://api.github.com/users/' + username + '/repos'
+        self.repo_type = repo_type
         self.sep = sep
         self.category = category
         self.curpath = os.path.dirname(os.path.abspath(__file__))
@@ -71,7 +74,7 @@ class Pypiplot:
         if (repo is not None) and ('str' in str(type(repo))):
             repo = [repo]
         # Extract all repos
-        repos = self._get_repo_names_from_git()
+        repos = self._get_repo_names_from_git(repo_type=self.repo_type)
         if (repo is not None):
             repos = repo
             if not np.any(np.isin(repos, repo)):
@@ -173,20 +176,28 @@ class Pypiplot:
         self.results['repos'] = repos
         return self.results
 
-    def _get_repo_names_from_git(self):
+    def _get_repo_names_from_git(self, repo_type=['owner']):
+        # repo_type=['private', 'fork', 'owner']
         # Extract repos for user
         if self.verbose>=3: print('[pypiplot] >Extracting repo names for [%s]..' %(self.username))
         r = requests.get(self.repo_link)
-        data = r.json()
+        git_repos = r.json()
 
         # Extract the repo names
-        repos = []
-        for rep in data:
-            # full_names.insert(0, rep['full_name'])
-            repos.insert(0, rep['name'])
-        if self.verbose>=3: print('[pypiplot] >[%.0d] repos found for [%s]' %(len(repos), self.username))
+        user_repos = []
+        for repo in git_repos:
+            if np.isin('owner', repo_type) and repo['owner']['login']==self.username:
+                user_repos.insert(0, repo['name'])
+                if self.verbose>=3: print('[pypiplot] > [owner] -> [%s]' %(repo['name']))
+            if np.isin('fork', repo_type) and repo['fork']:
+                user_repos.insert(0, repo['name'])
+                if self.verbose>=3: print('[pypiplot] > [fork] -> [%s]' %(repo['name']))
+            if np.isin('private', repo_type) and repo['private']:
+                user_repos.insert(0, repo['name'])
+                if self.verbose>=3: print('[pypiplot] > [private] -> [%s]' %(repo['name']))
+        if self.verbose>=3: print('[pypiplot] >[%.0d] repos found for [%s] under the tags: %s' %(len(user_repos), self.username, repo_type))
         # Return
-        return np.array(repos)
+        return np.array(user_repos)
 
     def _get_repos(self):
         status = True
