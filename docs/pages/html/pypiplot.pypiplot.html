@@ -17,6 +17,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -69,7 +70,21 @@
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#github">Github</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#citing">Citing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API References</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API References</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pypiplot.pypiplot.Pypiplot"><code class="docutils literal notranslate"><span class="pre">Pypiplot</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pypiplot.pypiplot.Pypiplot.plot"><code class="docutils literal notranslate"><span class="pre">Pypiplot.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pypiplot.pypiplot.Pypiplot.plot_cal"><code class="docutils literal notranslate"><span class="pre">Pypiplot.plot_cal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pypiplot.pypiplot.Pypiplot.plot_heatmap"><code class="docutils literal notranslate"><span class="pre">Pypiplot.plot_heatmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pypiplot.pypiplot.Pypiplot.plot_year"><code class="docutils literal notranslate"><span class="pre">Pypiplot.plot_year()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pypiplot.pypiplot.Pypiplot.stats"><code class="docutils literal notranslate"><span class="pre">Pypiplot.stats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pypiplot.pypiplot.Pypiplot.update"><code class="docutils literal notranslate"><span class="pre">Pypiplot.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pypiplot.pypiplot.add_new_counts_to_repo"><code class="docutils literal notranslate"><span class="pre">add_new_counts_to_repo()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pypiplot.pypiplot.get_files_on_disk"><code class="docutils literal notranslate"><span class="pre">get_files_on_disk()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pypiplot.pypiplot.read_repo_counts_from_disk"><code class="docutils literal notranslate"><span class="pre">read_repo_counts_from_disk()</span></code></a></li>
+</ul>
+</li>
 </ul>
 
     <a href= "genindex.html">Index</a>
@@ -98,13 +113,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <hr>
-<center>
-        <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
-        <div data-ea-publisher="erdogantgithubio" data-ea-type="text"></div>
-        <!-- <div data-ea-publisher="erdogantgithubio" data-ea-type="text" data-ea-style="fixedfooter"></div> -->
-</center>
-<hr><section id="module-pypiplot.pypiplot">
+  <section id="module-pypiplot.pypiplot">
 <span id="api-references"></span><h1>API References<a class="headerlink" href="#module-pypiplot.pypiplot" title="Permalink to this heading"></a></h1>
 <p>Pypiplot.</p>
 <dl class="py class">
@@ -125,91 +134,175 @@
 <dt class="sig sig-object py" id="pypiplot.pypiplot.Pypiplot.plot_heatmap">
 <span class="sig-name descname"><span class="pre">plot_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'d3_heatmap_repos.html'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">700</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'interpolateGreens'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypiplot.pypiplot.Pypiplot.plot_heatmap" title="Permalink to this definition"></a></dt>
 <dd><p>Plot heatmap across all repos.</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <p>Plot heatmap of all the repos combined with weeks vs day-name</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>title</strong> (<em>String</em><em>, </em><em>(</em><em>Default: None</em><em>)</em>) – Title of the heatmap.</p></li>
-<li><p><strong>description</strong> (<em>String</em><em>, </em><em>(</em><em>Default: None</em><em>)</em>) – Description of the heatmap.</p></li>
-<li><p><strong>path</strong> (<em>String</em><em>, </em><em>(</em><em>Default: 'd3_heatmap_repos.html'.</em><em>)</em>) – Full pathname or filename to store the file. If None is used, the system tempdir is used.</p></li>
-<li><p><strong>vmin</strong> (<em>int</em><em>, </em><em>(</em><em>Default: 25</em><em>)</em>) – Minimum color: Used for colorscheme.
-None: Take the minimum value in the matrix.</p></li>
-<li><p><strong>vmax</strong> (<em>int</em><em>, </em><em>(</em><em>Default: None</em><em>)</em>) – Minimum color: Used for colorscheme.
-None: Take the maximum value in the matrix.</p></li>
-<li><p><strong>cmap</strong> (<em>String</em><em>, </em><em>(</em><em>default: 'interpolateInferno'</em><em>)</em><em>.</em>) – The colormap scheme. This can be found at: <a class="reference external" href="https://github.com/d3/d3-scale-chromatic">https://github.com/d3/d3-scale-chromatic</a>
-‘interpolateOranges’</p></li>
-<li><p><strong>width</strong> (<em>int</em><em>, </em><em>(</em><em>default: 700</em><em>)</em><em>.</em>) – Width of the window.</p></li>
-<li><p><strong>height</strong> (<em>int</em><em>, </em><em>(</em><em>default: None</em><em>)</em><em>.</em>) – None: Determine based on number of repos.</p></li>
-</ul>
+<dt class="field-odd">param title</dt>
+<dd class="field-odd"><p>Title of the heatmap.</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None.</p>
+<dt class="field-even">type title</dt>
+<dd class="field-even"><p>String, (Default: None)</p>
+</dd>
+<dt class="field-odd">param description</dt>
+<dd class="field-odd"><p>Description of the heatmap.</p>
+</dd>
+<dt class="field-even">type description</dt>
+<dd class="field-even"><p>String, (Default: None)</p>
+</dd>
+<dt class="field-odd">param path</dt>
+<dd class="field-odd"><p>Full pathname or filename to store the file. If None is used, the system tempdir is used.</p>
+</dd>
+<dt class="field-even">type path</dt>
+<dd class="field-even"><p>String, (Default: ‘d3_heatmap_repos.html’.)</p>
+</dd>
+<dt class="field-odd">param vmin</dt>
+<dd class="field-odd"><p>Minimum color: Used for colorscheme.
+None: Take the minimum value in the matrix.</p>
+</dd>
+<dt class="field-even">type vmin</dt>
+<dd class="field-even"><p>int, (Default: 25)</p>
+</dd>
+<dt class="field-odd">param vmax</dt>
+<dd class="field-odd"><p>Minimum color: Used for colorscheme.
+None: Take the maximum value in the matrix.</p>
+</dd>
+<dt class="field-even">type vmax</dt>
+<dd class="field-even"><p>int, (Default: None)</p>
+</dd>
+<dt class="field-odd">param cmap</dt>
+<dd class="field-odd"><p>The colormap scheme. This can be found at: <a class="reference external" href="https://github.com/d3/d3-scale-chromatic">https://github.com/d3/d3-scale-chromatic</a>
+‘interpolateOranges’</p>
+</dd>
+<dt class="field-even">type cmap</dt>
+<dd class="field-even"><p>String, (default: ‘interpolateInferno’).</p>
+</dd>
+<dt class="field-odd">param width</dt>
+<dd class="field-odd"><p>Width of the window.</p>
+</dd>
+<dt class="field-even">type width</dt>
+<dd class="field-even"><p>int, (default: 700).</p>
+</dd>
+<dt class="field-odd">param height</dt>
+<dd class="field-odd"><p>None: Determine based on number of repos.</p>
+</dd>
+<dt class="field-even">type height</dt>
+<dd class="field-even"><p>int, (default: None).</p>
+</dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>None.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pypiplot.pypiplot.Pypiplot.plot_year">
 <span class="sig-name descname"><span class="pre">plot_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'d3heatmap.html'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'interpolateGreens'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypiplot.pypiplot.Pypiplot.plot_year" title="Permalink to this definition"></a></dt>
 <dd><p>Plot heatmap across all repos.</p>
+<section id="id1">
+<h2>Description<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <p>Plot heatmap of all the repos combined with weeks vs day-name</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>title</strong> (<em>String</em><em>, </em><em>(</em><em>Default: None</em><em>)</em>) – Title of the heatmap.</p></li>
-<li><p><strong>description</strong> (<em>String</em><em>, </em><em>(</em><em>Default: None</em><em>)</em>) – Description of the heatmap.</p></li>
-<li><p><strong>path</strong> (<em>String</em><em>, </em><em>(</em><em>Default: 'd3heatmap.html'.</em><em>)</em>) – Full pathname or filename to store the file. If None is used, the system tempdir is used.</p></li>
-<li><p><strong>vmin</strong> (<em>int</em><em>, </em><em>(</em><em>Default: 25</em><em>)</em>) – Minimum color: Used for colorscheme.
-None: Take the minimum value in the matrix.</p></li>
-<li><p><strong>vmax</strong> (<em>int</em><em>, </em><em>(</em><em>Default: None</em><em>)</em>) – Minimum color: Used for colorscheme.
-None: Take the maximum value in the matrix.</p></li>
-<li><p><strong>cmap</strong> (<em>String</em><em>, </em><em>(</em><em>default: 'interpolateInferno'</em><em>)</em><em>.</em>) – The colormap scheme. This can be found at: <a class="reference external" href="https://github.com/d3/d3-scale-chromatic">https://github.com/d3/d3-scale-chromatic</a>.</p></li>
-<li><p><strong>visible</strong> (<em>Bool</em><em>, </em><em>(</em><em>default: True</em><em>)</em><em>.</em>) – Open the browser.</p></li>
-</ul>
+<dt class="field-odd">param title</dt>
+<dd class="field-odd"><p>Title of the heatmap.</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None.</p>
+<dt class="field-even">type title</dt>
+<dd class="field-even"><p>String, (Default: None)</p>
+</dd>
+<dt class="field-odd">param description</dt>
+<dd class="field-odd"><p>Description of the heatmap.</p>
+</dd>
+<dt class="field-even">type description</dt>
+<dd class="field-even"><p>String, (Default: None)</p>
+</dd>
+<dt class="field-odd">param path</dt>
+<dd class="field-odd"><p>Full pathname or filename to store the file. If None is used, the system tempdir is used.</p>
+</dd>
+<dt class="field-even">type path</dt>
+<dd class="field-even"><p>String, (Default: ‘d3heatmap.html’.)</p>
+</dd>
+<dt class="field-odd">param vmin</dt>
+<dd class="field-odd"><p>Minimum color: Used for colorscheme.
+None: Take the minimum value in the matrix.</p>
+</dd>
+<dt class="field-even">type vmin</dt>
+<dd class="field-even"><p>int, (Default: 25)</p>
+</dd>
+<dt class="field-odd">param vmax</dt>
+<dd class="field-odd"><p>Minimum color: Used for colorscheme.
+None: Take the maximum value in the matrix.</p>
+</dd>
+<dt class="field-even">type vmax</dt>
+<dd class="field-even"><p>int, (Default: None)</p>
+</dd>
+<dt class="field-odd">param cmap</dt>
+<dd class="field-odd"><p>The colormap scheme. This can be found at: <a class="reference external" href="https://github.com/d3/d3-scale-chromatic">https://github.com/d3/d3-scale-chromatic</a>.</p>
+</dd>
+<dt class="field-even">type cmap</dt>
+<dd class="field-even"><p>String, (default: ‘interpolateInferno’).</p>
+</dd>
+<dt class="field-odd">param visible</dt>
+<dd class="field-odd"><p>Open the browser.</p>
+</dd>
+<dt class="field-even">type visible</dt>
+<dd class="field-even"><p>Bool, (default: True).</p>
+</dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>None.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pypiplot.pypiplot.Pypiplot.stats">
 <span class="sig-name descname"><span class="pre">stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypiplot.pypiplot.Pypiplot.stats" title="Permalink to this definition"></a></dt>
 <dd><p>Compute statistics for the specified repo(s).</p>
+<section id="id2">
+<h2>Description<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p>Compute and summarize statistics for the libraries.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>repo</strong> (<em>list of Strings</em><em>, </em><em>(</em><em>Default: None</em><em>)</em>) – None : Take all available pypi repos for the username.</p>
+<dt class="field-odd">param repo</dt>
+<dd class="field-odd"><p>None : Take all available pypi repos for the username.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
+<dt class="field-even">type repo</dt>
+<dd class="field-even"><p>list of Strings, (Default: None)</p>
+</dd>
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p>data : Download statistics for the repo(s).</p></li>
 <li><p>heatmap : DataFrame containing (summarized) data statistics.</p></li>
 <li><p>repos : Number of repos.</p></li>
 <li><p>n_libraries : Number of libraries processed.</p></li>
 </ul>
-</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict()</p>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>dict()</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pypiplot.pypiplot.Pypiplot.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pypiplot.pypiplot.Pypiplot.update" title="Permalink to this definition"></a></dt>
 <dd><p>Update repo download file(s).</p>
+<section id="id3">
+<h2>Description<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>Update the local stored file with daily downloads for the specified repos.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>repo</strong> (<em>list of Strings</em><em>, </em><em>(</em><em>Default: None</em><em>)</em>) – None : Take all available pypi repos for the username.</p>
+<dt class="field-odd">param repo</dt>
+<dd class="field-odd"><p>None : Take all available pypi repos for the username.</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None.</p>
+<dt class="field-even">type repo</dt>
+<dd class="field-even"><p>list of Strings, (Default: None)</p>
+</dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>None.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 </dd></dl>
